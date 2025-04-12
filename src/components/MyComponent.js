@@ -30,6 +30,17 @@ class MyComponent extends React.Component {
     console.log(">>> Position mouse: " + "X: " + event.screenX + " - Y:" + event.screenY);
   }
 
+  handleInput = (event) => {
+    this.setState({
+      name: event.target.value,
+    })
+  }
+
+  handleSubmitForm = (event) => {
+    event.preventDefault();
+    console.log(this.state);
+  }
+
   render() {
     return (
       <>
@@ -38,11 +49,15 @@ class MyComponent extends React.Component {
             My name is {this.state.name} and I'm from {this.state.address}. I'm {this.state.age}
           </div>
           <div>
-            <button onClick={(event) => this.handleClick(event)} onMouseOver={this.handlePosition}>Click here</button>
+            <button onClick={(event) => this.handleClick(event)}>Click here</button>
           </div>
           <div>
             <span>Position Mouse on Screen: X: {this.state.position.X} - Y: {this.state.position.Y}</span>
           </div>
+          <form onSubmit={(event) => this.handleSubmitForm(event)}>
+            <input type="text" onChange={(event) => this.handleInput(event)} />
+            <button type="submit">Submit</button>
+          </form>
         </div>
       </>
     )
