@@ -21,19 +21,26 @@ class DisplayInfo extends React.Component {
           <span onClick={() => this.handleHideListUser()}> {this.state.isShowList ? "Click to Hidden!" : "Click to Show!"}</span>
         </div>
         {this.state.isShowList &&
-          <div>
+          <>
             {users.map((item, index) => {
               return (
                 <div key={item.id} className={+item.age >= 18 ? "red" : "green"}>
-                  <div>Index: {index + 1}</div>
-                  <div>My name {item.name}</div>
-                  <div>I'm {item.age}</div>
+                  <div>
+                    <div>Index: {index + 1}</div>
+                    <div>My name {item.name}</div>
+                    <div>I'm {item.age}</div>
+                  </div>
+                  <div>
+                    <span>
+                      <button onClick={() => this.props.handleDeleteUser(item.id)}>-</button>
+                    </span>
+                  </div>
                   <hr />
                 </div>
               )
             }
             )}
-          </div>
+          </>
         }
       </div>
     )
