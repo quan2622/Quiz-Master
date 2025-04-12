@@ -1,5 +1,6 @@
 import React from "react";
 import "./DisplayInfo.scss"
+import logo from "../logo.svg"
 class DisplayInfo extends React.Component {
   state = {
     isShowList: false,
@@ -15,6 +16,7 @@ class DisplayInfo extends React.Component {
     let { users } = this.props;
     return (
       <div className="display-info-container">
+        <img src={logo} alt="Logo-app" />
         <div>
           <span onClick={() => this.handleHideListUser()}> {this.state.isShowList ? "Click to Hidden!" : "Click to Show!"}</span>
         </div>
