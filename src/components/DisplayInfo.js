@@ -6,6 +6,21 @@ class DisplayInfo extends React.Component {
     isShowList: false,
   }
 
+  componentDidMount() {
+    console.log(">> Call me did mount");
+    setTimeout(() => {
+      document.title = "Home 3s";
+    }, 3000);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.users != prevProps.users) {
+      if (this.props.users.length >= 5) {
+        alert('You got 5 user');
+      }
+    }
+  }
+
   handleHideListUser = () => {
     this.setState({
       isShowList: !this.state.isShowList,
