@@ -7,9 +7,12 @@ import {
   SidebarFooter,
   SidebarContent,
 } from 'react-pro-sidebar';
-import { FaTachometerAlt, FaGem, FaList, FaGithub, FaRegLaughWink, FaHeart } from 'react-icons/fa';
+import { FaTachometerAlt, FaGem, FaGithub, FaRegLaughWink } from 'react-icons/fa';
+import { DiReact } from "react-icons/di";
+import { MdDashboard } from "react-icons/md";
 import sidebarBg from '../../assest/bg2.jpg';
 import 'react-pro-sidebar/dist/css/styles.css';
+import "./SideBar.scss"
 
 const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
   return (
@@ -22,19 +25,20 @@ const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
         onToggle={handleToggleSidebar}
       >
         <SidebarHeader>
-          <div
-            style={{
-              padding: '24px',
-              textTransform: 'uppercase',
-              fontWeight: 'bold',
-              fontSize: 14,
-              letterSpacing: '1px',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-            }}
+          <div className="sidebar-container"
+          // style={{
+          //   padding: '24px',
+          //   textTransform: 'uppercase',
+          //   fontWeight: 'bold',
+          //   fontSize: 14,
+          //   letterSpacing: '1px',
+          //   overflow: 'hidden',
+          //   textOverflow: 'ellipsis',
+          //   whiteSpace: 'nowrap',
+          // }}
           >
-            Quiz Master
+            <DiReact size={'3em'} color="00bfff" />
+            <span>Quiz Master</span>
           </div>
         </SidebarHeader>
 
@@ -42,20 +46,22 @@ const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
           <Menu iconShape="circle">
             <MenuItem
               icon={<FaTachometerAlt />}
-              suffix={<span className="badge red">new</span>}
+            // suffix={<span className="badge red">new</span>}
             >
-              dashboard
+              Dashboard
             </MenuItem>
-            <MenuItem icon={<FaGem />}> components</MenuItem>
+            {/* <MenuItem icon={<FaGem />}> components</MenuItem> */}
           </Menu>
           <Menu iconShape="circle">
             <SubMenu
-              suffix={<span className="badge yellow">3</span>}
-              icon={<FaRegLaughWink />}
+              // suffix={<span className="badge yellow">3</span>}
+              // icon={<FaRegLaughWink />}
+              icon={<FaGem />}
+              title="Features"
             >
-              <MenuItem>1</MenuItem>
-              <MenuItem>2</MenuItem>
-              <MenuItem>3</MenuItem>
+              <MenuItem>Manage User</MenuItem>
+              <MenuItem>Manage Quiz</MenuItem>
+              <MenuItem>Manage Question</MenuItem>
             </SubMenu>
           </Menu>
         </SidebarContent>
@@ -68,14 +74,14 @@ const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
             }}
           >
             <a
-              href="https://github.com/azouaoui-med/react-pro-sidebar"
+              href=""
               target="_blank"
               className="sidebar-btn"
               rel="noopener noreferrer"
             >
               <FaGithub />
               <span style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
-                viewSource
+                QN_Production
               </span>
             </a>
           </div>
