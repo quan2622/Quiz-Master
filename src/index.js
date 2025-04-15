@@ -36,10 +36,10 @@ let router = createBrowserRouter([
     children: [
       { index: true, Component: HomePage },
       { path: "users", Component: User },
-      { path: "admin", Component: Admin },
     ],
   },
   { path: 'home', element: <Navigate to="/" replace /> },
+  { path: "admin", Component: Admin },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
