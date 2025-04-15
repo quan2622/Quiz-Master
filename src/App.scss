@@ -12,14 +12,31 @@ body {
 //   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 //     monospace;
 // }
+
+@media (min-width: 1350px) {
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl,
+  .container-xxl {
+    max-width: 1430px !important;
+  }
+}
+
 .app-container {
   .header-container {
     position: sticky;
     z-index: 999;
     max-width: 100dvw;
     .bg-body-tertiary {
-      padding: 18px 0;
-      background-color: rgba(0, 0, 0, 0) !important;
+      padding: 20px 0;
+      background-color: transparent !important;
+      .navbar-brand {
+        font-size: 30px;
+        font-weight: 600;
+        color: #3e3040;
+      }
       .navbar-nav {
         .nav-link {
           &.active {
@@ -33,11 +50,64 @@ body {
       }
     }
   }
+  .homepage-container {
+    .homepage-content {
+      padding: 100px;
+      position: relative;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      color: #3e3040;
+
+      .title-setion {
+        font-size: 57px;
+        font-weight: 600;
+        margin: 0;
+      }
+      .desc-section {
+        font-size: 20px;
+        opacity: 0.9;
+        margin: 0;
+      }
+    }
+  }
 }
 
 video {
   position: fixed;
-  bottom: 0;
-
+  bottom: -60px;
+  // top: 1px;
   width: 100vw;
+}
+
+.btn-classic {
+  padding: 4px 14px;
+  margin-right: 10px;
+  border: none;
+  background-color: #f2ece4;
+  border-radius: 12px;
+  transition: all 0.2s ease-in;
+  &:hover {
+    border-radius: 16px;
+    opacity: 0.8;
+  }
+  &.btn-login {
+    border: 1px solid #3e3040;
+    height: 40px;
+  }
+  &.btn-signup {
+    background-color: #3e3040;
+    color: #fff;
+    height: 40px;
+  }
+  &.btn-section {
+    padding: 14px 20px;
+    background-color: #3e3040;
+    color: #fff;
+    &:hover {
+      opacity: 1;
+      box-shadow: 1px 1px 10px #3e3040;
+    }
+  }
 }

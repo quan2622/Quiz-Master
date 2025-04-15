@@ -10,7 +10,7 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const handleScrollHeader = () => {
-    if (window.scrollY > 30) {
+    if (window.scrollY > 5) {
       setIsScrolled(true)
     } else {
       setIsScrolled(false)
@@ -37,7 +37,9 @@ const Header = () => {
             <NavLink to="/admin" className="nav-link">Admin</NavLink>
           </Nav>
           <Nav className="justify-content-end">
-            <NavDropdown title="Setting" id="basic-nav-dropdown">
+            <button className="btn-classic btn-login">Log in</button>
+            <button className="btn-classic btn-signup">Sign up</button>
+            {/* <NavDropdown title="Setting" id="basic-nav-dropdown">
               <NavDropdown.Item>Log in</NavDropdown.Item>
               <NavDropdown.Item>Log out</NavDropdown.Item>
               <NavDropdown.Item>Profile</NavDropdown.Item>
@@ -45,7 +47,7 @@ const Header = () => {
               <NavDropdown.Item>
                 Separated link
               </NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
           </Nav>
         </Navbar.Collapse>
       </Container>
