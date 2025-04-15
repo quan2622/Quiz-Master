@@ -12,6 +12,7 @@ import {
 } from "react-router";
 import User from "./components/User/User";
 import Admin from "./components/Admin/Admin";
+import HomePage from "./components/Home/HomePage";
 
 
 // import { BrowserRouter } from "react-router-dom";
@@ -33,6 +34,7 @@ let router = createBrowserRouter([
     path: "/",
     Component: App,
     children: [
+      { index: true, Component: HomePage },
       { path: "users", Component: User },
       { path: "admin", Component: Admin },
     ],

@@ -12,3 +12,32 @@ body {
 //   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 //     monospace;
 // }
+.app-container {
+  .header-container {
+    position: sticky;
+    z-index: 999;
+    max-width: 100dvw;
+    .bg-body-tertiary {
+      padding: 18px 0;
+      background-color: rgba(0, 0, 0, 0) !important;
+      .navbar-nav {
+        .nav-link {
+          &.active {
+            color: #00bfff;
+            font-weight: 500;
+          }
+        }
+      }
+      &.bg-header-white {
+        background-color: white;
+      }
+    }
+  }
+}
+
+video {
+  position: fixed;
+  bottom: 0;
+
+  width: 100vw;
+}
