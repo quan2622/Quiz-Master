@@ -3,6 +3,8 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { RiImageAddLine } from "react-icons/ri";
+import { toast } from "react-toastify";
+
 
 const ModelCreateUser = (props) => {
   const { show, setShow } = props
@@ -33,8 +35,29 @@ const ModelCreateUser = (props) => {
     }
   }
 
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
   const handleSubmit = async () => {
     // validate
+    const isValidEmail = validateEmail(email)
+    if (!isValidEmail) {
+      toast.error('Invalid Email');
+      return;
+    }
+    if (!passWord) {
+      toast.error('Invalid Password');
+      return;
+    }
+    if (!userName) {
+      toast.error('Invalid User Name');
+      return;
+    }
 
     // call api
     const data = new FormData();
@@ -45,7 +68,16 @@ const ModelCreateUser = (props) => {
     data.append('userImage', avt);
 
     let res = await axios.post('http://localhost:8081/api/v1/participant', data)
-    console.log(res);
+    console.log(res.data);
+    if (res.data && res.data.EC == 0) {
+      toast.success(res.data.EM);
+      setTimeout(() => {
+        handleClose()
+      }, 1000)
+    }
+    if (res.data && res.data.EC === 1) {
+      toast.warn(res.data.EM);
+    }
   }
 
   return (
