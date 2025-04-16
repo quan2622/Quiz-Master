@@ -1,13 +1,21 @@
+import axios from "axios";
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { RiImageAddLine } from "react-icons/ri";
 
-const ModelCreateUser = () => {
-  const [show, setShow] = useState(false);
+const ModelCreateUser = (props) => {
+  const { show, setShow } = props
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+    setUserName('');
+    setPassWord('');
+    setEmail('');
+    setRole('');
+    setAvt('');
+    setPreviewImg('');
+  }
 
   const [userName, setUserName] = useState('');
   const [passWord, setPassWord] = useState('');
@@ -21,16 +29,27 @@ const ModelCreateUser = () => {
       const file = event.target.files[0];
       let fileURL = URL.createObjectURL(file);
       setPreviewImg(fileURL);
-      setAvt(fileURL);
+      setAvt(file);
     }
+  }
+
+  const handleSubmit = async () => {
+    // validate
+
+    // call api
+    const data = new FormData();
+    data.append('email', email);
+    data.append('password', passWord);
+    data.append('username', userName);
+    data.append('role', role);
+    data.append('userImage', avt);
+
+    let res = await axios.post('http://localhost:8081/api/v1/participant', data)
+    console.log(res);
   }
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-
       <Modal show={show} onHide={handleClose} size="xl" backdrop="static">
         <Modal.Header closeButton>
           <Modal.Title>Add new user</Modal.Title>
@@ -51,7 +70,7 @@ const ModelCreateUser = () => {
             </div>
             <div className="col-md-4">
               <label className="form-label">Role</label>
-              <select className="form-select" onChange={e => setRole(e.target.value)}>
+              <select className="form-select" value={role} onChange={e => setRole(e.target.value)}>
                 <option value='USER'>USER</option>
                 <option value='ADMIN'>ADMIN</option>
               </select>
@@ -78,7 +97,7 @@ const ModelCreateUser = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={() => handleSubmit()}>
             Save
           </Button>
         </Modal.Footer>
