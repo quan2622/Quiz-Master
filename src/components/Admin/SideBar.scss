@@ -15,6 +15,18 @@
   }
 }
 
+.pro-sidebar {
+  .pro-menu {
+    .pro-menu-item {
+      &.pro-sub-menu {
+        .pro-inner-list-item {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}
+
 .sidebar-btn-wrapper {
   display: flex;
   justify-content: center;

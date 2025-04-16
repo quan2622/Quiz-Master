@@ -13,6 +13,8 @@ import {
 import User from "./components/User/User";
 import Admin from "./components/Admin/Admin";
 import HomePage from "./components/Home/HomePage";
+import ManageUser from "./components/Admin/Content/ManageUser";
+import DashBoard from "./components/Admin/Content/DashBoard";
 
 
 // import { BrowserRouter } from "react-router-dom";
@@ -39,7 +41,15 @@ let router = createBrowserRouter([
     ],
   },
   { path: 'home', element: <Navigate to="/" replace /> },
-  { path: "admin", Component: Admin },
+  {
+    path: "/admin",
+    Component: Admin,
+    children: [
+      { index: true, Component: DashBoard },
+      { path: 'manage-users', Component: ManageUser },
+
+    ]
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

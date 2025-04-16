@@ -1,0 +1,39 @@
+.manage-user-container {
+  .manage-user-content {
+  }
+}
+
+.modal {
+  #drop-area {
+    width: 100%;
+    height: 250px;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  .img-preview {
+    border: 1px dashed #7081e0;
+    border-radius: 5px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #6687e4;
+    opacity: 0.6;
+    background: #f7f8ff;
+    svg {
+      width: 30px;
+      height: auto;
+    }
+
+    img {
+      max-height: 98%;
+      width: auto;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+}
