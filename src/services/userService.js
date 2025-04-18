@@ -15,6 +15,10 @@ const getAllUser = () => {
   return AxiosInstance.get('api/v1/participant/all')
 }
 
+const getAllUserWithPaginate = (page, limit) => {
+  return AxiosInstance.get(`api/v1/participant?page=${page}&limit=${limit}`);
+}
+
 const putUpdateUser = (id, userName, role, avt) => {
   const data = new FormData();
   data.append('id', id);
@@ -31,6 +35,7 @@ const deleteUser = (userId) => {
 export {
   postCreateUser,
   getAllUser,
+  getAllUserWithPaginate,
   putUpdateUser,
   deleteUser,
 }

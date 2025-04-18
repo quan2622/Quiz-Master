@@ -67,7 +67,9 @@ const ModelCreateUser = (props) => {
       setTimeout(() => {
         handleClose()
       }, 1000)
-      await props.fetchListUser();
+      // await props.fetchListUser();
+      props.setCurrentPage(1);
+      await props.fetchListUserPaginate(1);
     }
     if (data && data.EC !== 0) {
       toast.warn(data.EM);

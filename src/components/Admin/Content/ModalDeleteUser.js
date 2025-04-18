@@ -19,7 +19,9 @@ const ModelDeleteUser = (props) => {
     if (data && data.EC == 0) {
       toast.success(data.EM);
       handleClose();
-      await props.fetchListUser();
+      // await props.fetchListUser();
+      // props.setCurrentPage(1);
+      await props.fetchListUserPaginate(props.currentPage);
     }
     if (data && data.EC !== 0) {
       toast.warn(data.EM);
