@@ -2,31 +2,35 @@ import { useEffect, useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  // const [isScrolled, setIsScrolled] = useState(false);
 
-  const handleScrollHeader = () => {
-    if (window.scrollY > 5) {
-      setIsScrolled(true)
-    } else {
-      setIsScrolled(false)
-    }
+  // const handleScrollHeader = () => {
+  //   if (window.scrollY > 5) {
+  //     setIsScrolled(true)
+  //   } else {
+  //     setIsScrolled(false)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   window.addEventListener('scroll', handleScrollHeader)
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScrollHeader)
+  //   }
+  // }, []);
+
+
+  const navigate = useNavigate();
+  const handleLogin = () => {
+    navigate('/login');
   }
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScrollHeader)
-    return () => {
-      window.removeEventListener('scroll', handleScrollHeader)
-    }
-  }, []);
-
   return (
     // <Navbar expand="lg" className="bg-body-tertiary" onScroll={() => handleScrollHeader()}>
-    <Navbar expand="lg" className={`bg-body-tertiary ${isScrolled ? 'bg-header-white' : ''}`}>
+    <Navbar expand="lg" className={`bg-body-tertiary`}>
       <Container>
         <NavLink to="/" className="navbar-brand">Quiz Master</NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -37,7 +41,7 @@ const Header = () => {
             <NavLink to="/admin" className="nav-link">Admin</NavLink>
           </Nav>
           <Nav className="justify-content-end">
-            <button className="btn-classic btn-login">Log in</button>
+            <button className="btn-classic btn-login" onClick={() => handleLogin()}>Log in</button>
             <button className="btn-classic btn-signup">Sign up</button>
             {/* <NavDropdown title="Setting" id="basic-nav-dropdown">
               <NavDropdown.Item>Log in</NavDropdown.Item>

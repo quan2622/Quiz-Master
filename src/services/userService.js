@@ -1,4 +1,3 @@
-import { data } from "react-router-dom";
 import AxiosInstance from "../ultis/axiosInstance";
 
 const postCreateUser = (email, passWord, userName, role, avt) => {

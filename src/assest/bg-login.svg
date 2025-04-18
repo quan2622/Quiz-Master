@@ -1,0 +1,48 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Custom path for background with square right corners and rounded left corners -->
+  <path d="M150,0 H800 V600 H150 C67.157,600 0,532.843 0,450 V150 C0,67.157 67.157,0 150,0 Z" fill="#f2b96f" />
+
+  <!-- Left content frame -->
+  <rect x="180" y="150" width="230" height="300" rx="5" fill="#f9f3e9" />
+  
+  <!-- Logo area -->
+  <rect x="210" y="180" width="170" height="30" rx="3" fill="#f9f3e9" stroke="#e0e0e0" />
+  <text x="220" y="200" font-family="Arial" font-size="14" fill="#aaa">online academy</text>
+  
+  <!-- Exam illustration area -->
+  <rect x="210" y="220" width="170" height="140" rx="0" fill="#f8d5a0" />
+  <circle cx="295" cy="260" r="18" fill="#e38d31" />
+  <rect x="240" y="290" width="110" height="7" rx="2" fill="#e38d31" />
+  <rect x="240" y="305" width="110" height="7" rx="2" fill="#e38d31" />
+  <rect x="240" y="320" width="70" height="7" rx="2" fill="#e38d31" />
+  <rect x="240" y="335" width="90" height="7" rx="2" fill="#e38d31" />
+  
+  <!-- Dark orange content area -->
+  <rect x="410" y="150" width="210" height="300" rx="0" fill="#e38d31" />
+  
+  <!-- Main content text -->
+  <text x="448" y="330" font-family="Georgia" font-size="24" fill="white">Ready for</text>
+  <text x="448" y="360" font-family="Georgia" font-size="24" fill="white">your next online</text>
+  <text x="448" y="390" font-family="Georgia" font-size="24" fill="white">exam?</text>
+  
+  <!-- Take exam button -->
+  <rect x="448" y="420" width="120" height="30" rx="3" fill="#1e1e1e" />
+  <text x="468" y="440" font-family="Arial" font-size="14" fill="white">Take exam</text>
+  
+  <!-- Practice button -->
+  <rect x="145" y="520" width="150" height="40" rx="5" fill="#b85b0e" />
+  <text x="185" y="545" font-family="Arial" font-size="16" fill="white">Practice</text>
+  <text x="167" y="545" font-family="Arial" font-size="16" fill="white">✓</text>
+  
+  <!-- Subject selection panel -->
+  <rect x="500" y="210" width="170" height="40" rx="20" fill="white" />
+  <circle cx="535" cy="230" r="12" fill="#b85b0e" />
+  <circle cx="570" cy="230" r="12" fill="#a8cff0" stroke="#eee" stroke-width="2" />
+  <circle cx="605" cy="230" r="12" fill="white" stroke="#ddd" stroke-width="2" />
+  <circle cx="640" cy="230" r="12" fill="#222" />
+  <text x="500" y="200" font-family="Arial" font-size="12" fill="white">Select subject</text>
+  
+  <!-- Difficulty level selector -->
+  <rect x="530" y="280" width="170" height="40" rx="5" fill="white" />
+  <text x="555" y="305" font-family="Arial" font-size="14" fill="#555">Select level</text>
+</svg>
