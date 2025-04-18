@@ -1,3 +1,4 @@
+import { data } from "react-router-dom";
 import AxiosInstance from "../ultis/axiosInstance";
 
 const postCreateUser = (email, passWord, userName, role, avt) => {
@@ -23,9 +24,13 @@ const putUpdateUser = (id, userName, role, avt) => {
   return AxiosInstance.put('api/v1/participant', data)
 }
 
+const deleteUser = (userId) => {
+  return AxiosInstance.delete('api/v1/participant', { data: { id: userId } })
+}
+
 export {
   postCreateUser,
   getAllUser,
   putUpdateUser,
-
+  deleteUser,
 }

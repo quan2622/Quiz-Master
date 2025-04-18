@@ -6,11 +6,13 @@ import { useEffect, useState } from "react";
 import { getAllUser } from "../../../services/userService";
 import ModelUpdateUser from "./ModalUpdateUser";
 import ModelViewUser from "./ModalViewUser";
+import ModelDeleteUser from "./ModalDeleteUser";
 
 const ManageUser = (props) => {
   const [showModalCreateUser, setShowModalCreateUser] = useState(false);
   const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
   const [showModalViewUser, setShowModalViewUser] = useState(false);
+  const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
   const [dataUser, setDataUser] = useState({});
   const [listUser, setListUser] = useState([])
 
@@ -36,6 +38,11 @@ const ManageUser = (props) => {
     setDataUser(dataUser);
   }
 
+  const handleClickBtnDelete = (dataUser) => {
+    setShowModalDeleteUser(true);
+    setDataUser(dataUser);
+  }
+
   const resetDataUser = () => {
     setDataUser({});
   }
@@ -56,6 +63,7 @@ const ManageUser = (props) => {
             listUser={listUser}
             handleClickBtnUpdate={handleClickBtnUpdate}
             handleClickBtnView={handleClickBtnView}
+            handleClickBtnDelete={handleClickBtnDelete}
           />
         </div>
 
@@ -76,6 +84,13 @@ const ManageUser = (props) => {
           setShow={setShowModalViewUser}
           dataUser={dataUser}
           resetDataUser={resetDataUser}
+        />
+        <ModelDeleteUser
+          show={showModalDeleteUser}
+          setShow={setShowModalDeleteUser}
+          dataUser={dataUser}
+          resetDataUser={resetDataUser}
+          fetchListUser={fetchListUser}
         />
       </div>
     </div>
