@@ -5,14 +5,34 @@ import { useState } from "react";
 import { LoginAccount } from "../../../services/authService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 const Login = (props) => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassWord] = useState(false);
+
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
 
   const handleLogin = async () => {
+    if (!validateEmail(email)) {
+      toast.error("Invalid Email!");
+      return;
+    }
+    if (!password) {
+      toast.warn("Please enter your password!");
+      return;
+    }
+
     let data = await LoginAccount(email, password);
     // console.log("data login: ", data);
     if (data && +data.EC === 0) {
@@ -48,7 +68,10 @@ const Login = (props) => {
                   </div>
                   <div className="form-group mt-4">
                     <label className="form-label">Password</label>
-                    <input type={"password"} placeholder="Password" className="form-control input-login" value={password} onChange={(event) => setPassword(event.target.value)} />
+                    <input type={showPassword ? "text" : "password"} placeholder="Password" className="form-control input-login input-password" value={password} onChange={(event) => setPassword(event.target.value)} />
+                    <button className="showPassword" onMouseDown={() => setShowPassWord(!showPassword)} onMouseUp={() => setShowPassWord(!showPassword)}>
+                      {showPassword ? <IoIosEye /> : <IoIosEyeOff />}
+                    </button>
                   </div>
 
                   <div className="form-bottom">

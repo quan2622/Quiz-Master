@@ -58,11 +58,25 @@
             border-radius: 12px;
             outline: none;
             border: none;
+
+            &.input-password {
+            }
+
             &:focus {
               outline: none;
               border: none;
               box-shadow: 1px 1px 10px #3e304083;
             }
+          }
+
+          .showPassword {
+            position: absolute;
+            top: 53.5%;
+            left: 38.5%;
+            border: none;
+            background: transparent;
+            font-size: 21px;
+            color: #3c323e;
           }
 
           .form-bottom {
