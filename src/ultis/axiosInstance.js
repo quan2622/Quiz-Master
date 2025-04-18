@@ -15,7 +15,7 @@ AxiosInstance.interceptors.request.use(function (config) {
 
 // Add a response interceptor
 AxiosInstance.interceptors.response.use(function (response) {
-  console.log(">> intercepter: ", response)
+  // console.log(">> intercepter: ", response)
   return response && response.data ? response.data : response;
 }, function (error) {
   return error && error.response && error.response.data ? error.response.data : Promise.reject(error);

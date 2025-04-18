@@ -9,6 +9,13 @@ const postCreateUser = (email, passWord, userName, role, avt) => {
   data.append('userImage', avt);
   return AxiosInstance.post('api/v1/participant', data)
 }
+
+const getAllUser = () => {
+  return AxiosInstance.get('api/v1/participant/all')
+}
+
+
 export {
   postCreateUser,
+  getAllUser,
 }
