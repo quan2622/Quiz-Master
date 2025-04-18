@@ -61,12 +61,13 @@ const ModelCreateUser = (props) => {
 
     // call api
     let data = await postCreateUser(email, passWord, userName, role, avt)
-    console.log(">> Component create user: ", data);
+    // console.log(">> Component create user: ", data);
     if (data && data.EC == 0) {
       toast.success(data.EM);
       setTimeout(() => {
         handleClose()
       }, 1000)
+      await props.fetchListUser();
     }
     if (data && data.EC !== 0) {
       toast.warn(data.EM);
