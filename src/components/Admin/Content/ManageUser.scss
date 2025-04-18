@@ -31,8 +31,11 @@
     font-size: 16px;
     font-weight: 600;
     color: #6687e4;
-    opacity: 0.6;
     background: #f7f8ff;
+    span {
+      opacity: 0.6;
+    }
+
     svg {
       width: 30px;
       height: auto;
