@@ -4,9 +4,12 @@ import { FaPlus } from "react-icons/fa";
 import TableUser from "./TableUser";
 import { useEffect, useState } from "react";
 import { getAllUser } from "../../../services/userService";
+import ModelUpdateUser from "./ModalUpdateUser";
 
 const ManageUser = (props) => {
   const [showModalCreateUser, setShowModalCreateUser] = useState(false);
+  const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
+  const [dataUserUpdate, setDataUserUpdate] = useState({});
   const [listUser, setListUser] = useState([])
 
   useEffect(() => {
@@ -21,6 +24,11 @@ const ManageUser = (props) => {
     }
   }
 
+  const handleClickBtnUpdate = (dataUser) => {
+    setShowModalUpdateUser(true);
+    setDataUserUpdate(dataUser);
+  }
+
   return (
     <div className="manage-user-container">
       <div className="title">
@@ -33,13 +41,21 @@ const ManageUser = (props) => {
           </button>
         </div>
         <div className="table-users-container">
-          <TableUser listUser={listUser} />
+          <TableUser
+            listUser={listUser}
+            handleClickBtnUpdate={handleClickBtnUpdate}
+          />
         </div>
 
         <ModelCreateUser
           show={showModalCreateUser}
           setShow={setShowModalCreateUser}
           fetchListUser={fetchListUser}
+        />
+        <ModelUpdateUser
+          show={showModalUpdateUser}
+          setShow={setShowModalUpdateUser}
+          dataUserUpdate={dataUserUpdate}
         />
       </div>
     </div>
