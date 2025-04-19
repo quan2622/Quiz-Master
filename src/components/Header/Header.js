@@ -42,7 +42,7 @@ const Header = () => {
           </Nav>
           <Nav className="justify-content-end">
             <button className="btn-classic btn-login" onClick={() => handleLogin()}>Log in</button>
-            <button className="btn-classic btn-signup">Sign up</button>
+            <button className="btn-classic btn-signup" onClick={() => navigate("/sign-up")}>Sign up</button>
             {/* <NavDropdown title="Setting" id="basic-nav-dropdown">
               <NavDropdown.Item>Log in</NavDropdown.Item>
               <NavDropdown.Item>Log out</NavDropdown.Item>

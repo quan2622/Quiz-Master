@@ -1,8 +1,8 @@
 import { NavLink } from "react-bootstrap";
 import "./Login.scss"
-import bgLogin from "../../../assest/bg-login.svg";
+import bgLogin from "../../assest/bg-login.svg";
 import { useState } from "react";
-import { LoginAccount } from "../../../services/authService";
+import { LoginAccount } from "../../services/authService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
