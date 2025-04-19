@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
+import { ImSpinner } from "react-icons/im";
 
 const Login = (props) => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassWord] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateEmail = (email) => {
     return String(email)
@@ -36,15 +38,18 @@ const Login = (props) => {
       return;
     }
 
+    setIsLoading(true)
     let data = await LoginAccount(email, password);
     // console.log("data login: ", data);
     if (data && +data.EC === 0) {
       dispatch(doLogin());
-      navigate('/');
       toast.success(data.EM);
+      setIsLoading(false);
+      navigate('/');
     }
     if (data && +data.EC !== 0) {
       toast.warn(data.EM);
+      setIsLoading(false);
     }
   }
 
@@ -80,7 +85,10 @@ const Login = (props) => {
 
                   <div className="form-bottom">
                     <span>Forgot password ?</span>
-                    <button className="btn-login" onClick={() => handleLogin()}>Login</button>
+                    <button className="btn-login" onClick={() => handleLogin()} disabled={isLoading}>
+                      {isLoading == true && <ImSpinner className="loader-icon" />}
+                      <span>Login</span>
+                    </button>
                     <div className="nav-signup">
                       or <span className="nav-title" onClick={() => navigate("/sign-up")}>&nbsp; Sign up &nbsp;</span> an account!
                     </div>

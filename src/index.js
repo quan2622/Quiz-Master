@@ -21,6 +21,9 @@ import Signup from "./components/Auth/Signup";
 import { Bounce, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
+// loading on top page
+import 'nprogress/nprogress.css'
+
 // import { BrowserRouter } from "react-router-dom";
 
 // const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -121,3 +121,14 @@ video {
     }
   }
 }
+
+// Cusstom CSS NProgress
+#nprogress .bar {
+  background: #e38d31 !important;
+  height: 4px !important;
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+  box-shadow: 0 0 10px #f49d40, 0 0 5px #f49d40 !important;
+}
