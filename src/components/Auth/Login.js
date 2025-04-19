@@ -6,9 +6,12 @@ import { LoginAccount } from "../../services/authService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import { doLogin } from "../../redux/action/userAction";
 
 const Login = (props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,6 +39,7 @@ const Login = (props) => {
     let data = await LoginAccount(email, password);
     // console.log("data login: ", data);
     if (data && +data.EC === 0) {
+      dispatch(doLogin());
       navigate('/');
       toast.success(data.EM);
     }

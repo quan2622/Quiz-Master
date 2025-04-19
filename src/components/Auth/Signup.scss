@@ -127,14 +127,21 @@
             button {
               width: 100%;
               padding: 10px 12px;
-              border-radius: 12px;
+              border-radius: 10px;
               font-size: 16px;
               background: #3c323e;
               color: #fff;
               border: none;
-
+              transition: all 0.3s ease-in;
+              font-size: 18px;
+              font-weight: 600;
               &:focus {
                 border: none;
+              }
+
+              &:hover {
+                border-radius: 18px;
+                box-shadow: 2px 2px 18px #3e3040c3;
               }
             }
           }

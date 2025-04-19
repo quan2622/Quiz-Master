@@ -1,6 +1,12 @@
+import { useSelector } from "react-redux";
 import video_HomePage from "../../assest/video-homepage.mp4"
 
 const HomePage = (props) => {
+  const account = useSelector(state => state.user.account);
+  const isAuthencated = useSelector(state => state.user.isAuthencated);
+  // console.log("account: ", account);
+  // console.log("is authencated: ", isAuthencated);
+
   return (
     <>
       <div className="homepage-container">

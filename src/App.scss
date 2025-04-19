@@ -44,6 +44,16 @@ body {
             font-weight: 500;
           }
         }
+
+        .dropdown-menu {
+          &.show {
+            min-width: 120px;
+            overflow: hidden;
+          }
+          .dropdown-item {
+            min-width: 120px;
+          }
+        }
       }
       &.bg-header-white {
         background-color: white;
