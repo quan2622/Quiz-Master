@@ -40,9 +40,8 @@ const Login = (props) => {
 
     setIsLoading(true)
     let data = await LoginAccount(email, password);
-    // console.log("data login: ", data);
     if (data && +data.EC === 0) {
-      dispatch(doLogin());
+      dispatch(doLogin(data.DT));
       toast.success(data.EM);
       setIsLoading(false);
       navigate('/');

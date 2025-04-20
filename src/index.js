@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import store from './redux/store';
+import { store, persistor } from './redux/store';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   createBrowserRouter,
@@ -23,6 +23,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // loading on top page
 import 'nprogress/nprogress.css'
+import { PersistGate } from "redux-persist/integration/react";
+import ListQuiz from "./components/User/ListQuiz";
 
 // import { BrowserRouter } from "react-router-dom";
 
@@ -44,7 +46,7 @@ let router = createBrowserRouter([
     Component: App,
     children: [
       { index: true, Component: HomePage },
-      { path: "users", Component: User },
+      { path: "users", Component: ListQuiz },
     ],
   },
   { path: 'home', element: <Navigate to="/" replace /> },
@@ -63,21 +65,23 @@ let router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <RouterProvider router={router} />
-    <ToastContainer
-      position="top-right"
-      autoClose={1800}
-      limit={4}
-      hideProgressBar
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="colored"
-      transition={Bounce}
-    />
+    <PersistGate loading={null} persistor={persistor}>
+      <RouterProvider router={router} />
+      <ToastContainer
+        position="top-right"
+        autoClose={1800}
+        limit={4}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Bounce}
+      />
+    </PersistGate>
   </Provider>
 );
 
