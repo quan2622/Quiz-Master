@@ -25,6 +25,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'nprogress/nprogress.css'
 import { PersistGate } from "redux-persist/integration/react";
 import ListQuiz from "./components/User/ListQuiz";
+import DetailQuiz from "./components/User/DetailQuiz";
+import NotFound from "./components/Home/NotFound";
 
 // import { BrowserRouter } from "react-router-dom";
 
@@ -39,7 +41,6 @@ import ListQuiz from "./components/User/ListQuiz";
 //   </Provider>
 // );
 
-
 let router = createBrowserRouter([
   {
     path: "/",
@@ -50,6 +51,7 @@ let router = createBrowserRouter([
     ],
   },
   { path: 'home', element: <Navigate to="/" replace /> },
+  { path: 'quiz/:id', Component: DetailQuiz },
   {
     path: "/admin",
     Component: Admin,
@@ -60,6 +62,7 @@ let router = createBrowserRouter([
   },
   { path: '/login', Component: Login },
   { path: '/sign-up', Component: Signup },
+  { path: '*', Component: NotFound },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
