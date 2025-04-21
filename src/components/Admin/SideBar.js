@@ -13,9 +13,10 @@ import { MdDashboard } from "react-icons/md";
 import sidebarBg from '../../assest/bg2.jpg';
 import 'react-pro-sidebar/dist/css/styles.css';
 import "./SideBar.scss"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
+  const navigate = useNavigate();
   return (
     <>
       <ProSidebar
@@ -39,7 +40,7 @@ const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
           // }}
           >
             <DiReact size={'3em'} color="00bfff" />
-            <span>Quiz Master</span>
+            <span onClick={() => navigate('/')}>Quiz Master</span>
           </div>
         </SidebarHeader>
 
@@ -65,7 +66,10 @@ const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
                 Manage User
                 <Link to='/admin/manage-users' />
               </MenuItem>
-              <MenuItem>Manage Quiz</MenuItem>
+              <MenuItem>
+                Manage Quiz
+                <Link to='/admin/manage-quiz' />
+              </MenuItem>
               <MenuItem>Manage Question</MenuItem>
             </SubMenu>
           </Menu>

@@ -27,6 +27,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import ListQuiz from "./components/User/ListQuiz";
 import DetailQuiz from "./components/User/DetailQuiz";
 import NotFound from "./components/Home/NotFound";
+import ManageQuiz from "./components/Admin/Content/Quiz/ManageQuiz";
 
 // import { BrowserRouter } from "react-router-dom";
 
@@ -58,6 +59,7 @@ let router = createBrowserRouter([
     children: [
       { index: true, Component: DashBoard },
       { path: 'manage-users', Component: ManageUser },
+      { path: 'manage-quiz', Component: ManageQuiz },
     ]
   },
   { path: '/login', Component: Login },
