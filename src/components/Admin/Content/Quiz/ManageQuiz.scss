@@ -2,8 +2,8 @@
   padding: 15px;
 
   .title {
-    font-size: 28px;
-    font-weight: 500;
+    font-size: 20px;
+    font-weight: 700;
     color: #3e3040;
     display: inline-block;
     border-bottom: 1px solid #3e3040;
@@ -62,6 +62,15 @@
           object-position: center;
         }
       }
+    }
+  }
+  .list-detail {
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #3e3040;
+      display: inline-block;
+      border-bottom: 1px solid #3e3040;
     }
   }
 }

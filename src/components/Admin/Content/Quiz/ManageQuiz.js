@@ -6,6 +6,7 @@ import Select from 'react-select';
 import { addNewQuiz } from "../../../../services/quizService";
 import { toast } from "react-toastify";
 import TableQuiz from "./TableQuiz";
+import { Accordion } from "react-bootstrap";
 
 const ManageQuiz = (props) => {
   const [name, setName] = useState('');
@@ -53,44 +54,54 @@ const ManageQuiz = (props) => {
 
   return (
     <div className="quiz-container">
-      <div className="title">
-        Manage Quiz
-      </div>
-      <div className="add-new">
-
-        <fieldset className="border rounded-3 p-3">
-          <legend className="float-none w-auto px-3">Add New Quiz:</legend>
-          <div className="form-floating mb-3">
-            <input type="email" className="form-control" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-            <label >Name</label>
-          </div>
-          <div className="form-floating mb-3">
-            <input type="text" className="form-control" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-            <label >Description</label>
-          </div>
-          <div className="more-action">
-            <div className="select-container">
-              <Select
-                value={difficulty}
-                onChange={setDifficulty}
-                options={options}
-                placeholder={'Select quiz type'}
-              />
-              <button className="btn btn-primary" onClick={() => handleSubmitQuiz()}>Submit</button>
+      <Accordion defaultActiveKey="0">
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>
+            <div className="title">
+              Manage Quiz
             </div>
-            <label htmlFor="input-file" className="form-label" id="drop-area">
-              <input id="input-file" type="file" accept="image/*" hidden onChange={e => handleUploadImage(e)} />
-              <div className="col-md-12 img-preview">
-                {previewImg ?
-                  <img src={previewImg} alt="image-upload" />
-                  :
-                  <span><RiImageAddLine /> Upload Image Quiz Here!</span>
-                }
-              </div>
-            </label>
-          </div>
-        </fieldset>
-      </div>
+          </Accordion.Header>
+          <Accordion.Body>
+            <div className="add-new">
+
+              <fieldset className="border rounded-3 p-3">
+                <legend className="float-none w-auto px-3">Add New Quiz:</legend>
+                <div className="form-floating mb-3">
+                  <input type="email" className="form-control" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+                  <label >Name</label>
+                </div>
+                <div className="form-floating mb-3">
+                  <input type="text" className="form-control" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
+                  <label >Description</label>
+                </div>
+                <div className="more-action">
+                  <div className="select-container">
+                    <Select
+                      value={difficulty}
+                      onChange={setDifficulty}
+                      options={options}
+                      placeholder={'Select quiz type'}
+                    />
+                    <button className="btn btn-primary" onClick={() => handleSubmitQuiz()}>Submit</button>
+                  </div>
+                  <label htmlFor="input-file" className="form-label" id="drop-area">
+                    <input id="input-file" type="file" accept="image/*" hidden onChange={e => handleUploadImage(e)} />
+                    <div className="col-md-12 img-preview">
+                      {previewImg ?
+                        <img src={previewImg} alt="image-upload" />
+                        :
+                        <span><RiImageAddLine /> Upload Image Quiz Here!</span>
+                      }
+                    </div>
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+
+
       <hr />
       <div className="list-detail">
         <TableQuiz />
