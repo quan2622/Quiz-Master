@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { useEffect } from "react";
 
 const Question = (props) => {
   const { data, index } = props;
@@ -7,8 +6,10 @@ const Question = (props) => {
   if (_.isEmpty(data)) {
     return (<></>)
   }
-  // useEffect(() => {
-  // }, [data]);
+
+  const handleCheckbox = (event, aId, qId) => {
+    props.handleCheckbox(+aId, +qId);
+  }
   return (
     <>
       <div className="question">
@@ -23,18 +24,15 @@ const Question = (props) => {
         {data.answer && data.answer.length > 0 &&
           data.answer.map((item, index) => {
             return (
-              <label className="item" key={`answer-${item.id}`} for={index}>
-                <input class="form-check-input" type="checkbox" value="" id={index} />
-                <label class="form-check-label" for={index}>
+              <label className="item" key={`answer-${item.id}`} htmlFor={index}>
+                <input className="form-check-input" type="checkbox" id={index} onChange={(e) => handleCheckbox(e, item.id, data.questionId)} checked={item.isSelected} />
+                <label className="form-check-label" htmlFor={index}>
                   {item.description}
                 </label>
               </label>
             )
           })
         }
-        {/* <div className="item">B. dap an 2</div>
-        <div className="item">C. dap an 3</div>
-        <div className="item">D. dap an 4</div> */}
       </div>
     </>
   )

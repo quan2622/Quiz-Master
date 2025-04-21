@@ -34,6 +34,7 @@ const DetailQuiz = (props) => {
               question_description = item.description;
               question_image = item.image;
             }
+            item.answers.isSelected = false;
             answer.push(item.answers);
           });
           return {
@@ -44,7 +45,7 @@ const DetailQuiz = (props) => {
           }
         })
         .value()
-      console.log("check_new data: ", new_raw);
+      // console.log("check_new data: ", new_raw);
       setDataQuiz(new_raw);
     }
   }
@@ -58,6 +59,28 @@ const DetailQuiz = (props) => {
       setCurrentQuestion(currentQuestion + 1)
   }
 
+  const handleCheckbox = (answerId, questionId) => {
+    let dataQuizClone = _.cloneDeep(dataQuiz);
+    let question = dataQuizClone.find(item => +item.questionId === +questionId);
+    if (question && question.answer) {
+      question.answer = question.answer.map((item, index) => {
+        if (+item.id === +answerId) {
+          item.isSelected = !item.isSelected;
+        }
+        return item;
+      })
+    }
+    let index = dataQuizClone.findIndex(item => +item.questionId === +questionId);
+    console.log("question update: ", question);
+    if (index > -1) {
+      dataQuizClone[index] = question;
+      setDataQuiz(dataQuizClone);
+    }
+
+  }
+
+  console.log("Check data quiz: ", dataQuiz);
+
   return (
     <div className="detail-quiz-container">
       <div className="left-content">
@@ -67,7 +90,11 @@ const DetailQuiz = (props) => {
         <div className="body">
           <div className="question-body">
             <div className="question-content">
-              <Question data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[currentQuestion] : {}} index={currentQuestion} />
+              <Question
+                data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[currentQuestion] : {}}
+                index={currentQuestion}
+                handleCheckbox={handleCheckbox}
+              />
             </div>
           </div>
           <div className="footer">
