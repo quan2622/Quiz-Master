@@ -20,9 +20,15 @@ const addNewQuiz = (name, description, difficulty, quizImage) => {
   data.append('quizImage', quizImage);
   return AxiosInstance.post('api/v1/quiz', data)
 }
+
+const getDataQuizTable = () => {
+  return AxiosInstance.get('api/v1/quiz/all');
+}
+
 export {
   getQuizByUser,
   getDataQuiz,
   submitQuiz,
   addNewQuiz,
+  getDataQuizTable,
 }

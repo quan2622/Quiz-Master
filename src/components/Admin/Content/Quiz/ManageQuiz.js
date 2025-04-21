@@ -5,6 +5,7 @@ import "./ManageQuiz.scss"
 import Select from 'react-select';
 import { addNewQuiz } from "../../../../services/quizService";
 import { toast } from "react-toastify";
+import TableQuiz from "./TableQuiz";
 
 const ManageQuiz = (props) => {
   const [name, setName] = useState('');
@@ -92,7 +93,7 @@ const ManageQuiz = (props) => {
       </div>
       <hr />
       <div className="list-detail">
-        table
+        <TableQuiz />
       </div>
     </div>
   )
