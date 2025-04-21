@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { data, useLocation, useParams } from "react-router-dom";
-import { getDataQuiz } from "../../services/quizService";
+import { getDataQuiz, submitQuiz } from "../../services/quizService";
 import _ from "lodash";
 import "./DetailQuiz.scss"
 import Question from "./Question";
+import { toast } from "react-toastify";
+import ModalResult from "./ModalResult";
 
 const DetailQuiz = (props) => {
   const params = useParams();
@@ -13,6 +15,8 @@ const DetailQuiz = (props) => {
 
   const [dataQuiz, setDataQuiz] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [showResult, setShowResult] = useState(false);
+  const [dataModal, setDataModal] = useState({});
 
   useEffect(() => {
     FetchQuestions();
@@ -71,7 +75,6 @@ const DetailQuiz = (props) => {
       })
     }
     let index = dataQuizClone.findIndex(item => +item.questionId === +questionId);
-    console.log("question update: ", question);
     if (index > -1) {
       dataQuizClone[index] = question;
       setDataQuiz(dataQuizClone);
@@ -79,7 +82,38 @@ const DetailQuiz = (props) => {
 
   }
 
-  console.log("Check data quiz: ", dataQuiz);
+  const handleFinishQuiz = async () => {
+    console.log("check quiz submit: ", dataQuiz);
+    let payload = {
+      quizId: +quizId,
+      answers: [],
+    };
+    if (dataQuiz && dataQuiz.length > 0) {
+      dataQuiz.forEach(item => {
+        let question = {
+          questionId: +item.questionId,
+          userAnswerId: [],
+        };
+
+        item.answer.forEach(item => {
+          if (item.isSelected) question.userAnswerId.push(item.id);
+        })
+        payload.answers.push(question);
+      })
+    }
+
+    // Submit quiz API
+    const res = await submitQuiz(payload);
+    if (res.EC === 0) {
+      toast.success(res.EM);
+      console.log("data respone: ", res);
+      setDataModal(res.DT);
+      setShowResult(true);
+    } else {
+      toast.error(res.EM);
+    }
+  }
+  console.log('check data model: ', dataModal);
 
   return (
     <div className="detail-quiz-container">
@@ -142,9 +176,14 @@ const DetailQuiz = (props) => {
         </div>
         <hr />
         <div className="section-3">
-          <button>Submit quiz</button>
+          <button onClick={() => handleFinishQuiz()}>Submit quiz</button>
         </div>
       </div>
+      <ModalResult
+        show={showResult}
+        setShow={setShowResult}
+        dataModal={dataModal}
+      />
     </div>
   )
 }
