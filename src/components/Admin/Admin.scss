@@ -2,7 +2,7 @@
   display: flex;
   .admin-sidebar {
     .pro-sidebar {
-      min-height: 100vh !important;
+      max-height: 100vh !important;
     }
   }
 
@@ -13,6 +13,7 @@
       border-bottom: 1px solid #adadad;
     }
     .admin-main {
+      height: calc(100vh - 40px);
       .user-paginate {
         display: flex;
         justify-content: center;
