@@ -29,6 +29,7 @@ import ListQuiz from "./components/User/ListQuiz";
 import DetailQuiz from "./components/User/DetailQuiz";
 import NotFound from "./components/Home/NotFound";
 import ManageQuiz from "./components/Admin/Content/Quiz/ManageQuiz";
+import ManageQuestion from "./components/Admin/Content/Question/ManageQuestion";
 
 // import { BrowserRouter } from "react-router-dom";
 
@@ -61,6 +62,7 @@ let router = createBrowserRouter([
       { index: true, Component: DashBoard },
       { path: 'manage-users', Component: ManageUser },
       { path: 'manage-quiz', Component: ManageQuiz },
+      { path: 'manage-question', Component: ManageQuestion },
     ]
   },
   { path: '/login', Component: Login },
