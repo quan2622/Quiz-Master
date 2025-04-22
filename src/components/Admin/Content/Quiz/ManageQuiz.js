@@ -3,10 +3,11 @@ import { RiImageAddLine } from "react-icons/ri";
 
 import "./ManageQuiz.scss"
 import Select from 'react-select';
-import { addNewQuiz } from "../../../../services/quizService";
+import { addNewQuiz, getDataQuizTable } from "../../../../services/quizService";
 import { toast } from "react-toastify";
 import TableQuiz from "./TableQuiz";
 import { Accordion } from "react-bootstrap";
+import ModelUpdateQuiz from "./ModalUpdateQuiz";
 
 const ManageQuiz = (props) => {
   const [name, setName] = useState('');
@@ -15,6 +16,9 @@ const ManageQuiz = (props) => {
   const [quizImage, setQuizImage] = useState('');
   const [previewImg, setPreviewImg] = useState('');
 
+  const [listQuiz, setListQuiz] = useState([]);
+  const [dataQuiz, setDataQuiz] = useState({});
+  const [isShowModalUpdate, setIsShowModalUpdate] = useState(false);
   const options = [
     { value: '', label: 'Select Difficulty', isDisabled: true },
     { value: 'EASY', label: 'EASY' },
@@ -39,7 +43,7 @@ const ManageQuiz = (props) => {
     }
 
     const res = await addNewQuiz(name, description, difficulty?.value, quizImage);
-    console.log(res);
+    // console.log(res);
     if (res && res.EC === 0) {
       toast.success(res.EM);
       setName('');
@@ -50,6 +54,22 @@ const ManageQuiz = (props) => {
     } else {
       toast.error(res.EM);
     }
+  }
+
+  const fetchDataQuiz = async () => {
+    const data = await getDataQuizTable();
+    console.log("check data table: ", data);
+    setListQuiz(data.DT);
+  }
+
+  const handleUpdate = (data) => {
+    setDataQuiz(data);
+    setIsShowModalUpdate(true);
+    console.log("check data update: ", dataQuiz);
+  }
+
+  const resetData = () => {
+    setDataQuiz({});
   }
 
   return (
@@ -104,8 +124,19 @@ const ManageQuiz = (props) => {
 
       <hr />
       <div className="list-detail">
-        <TableQuiz />
+        <TableQuiz
+          listQuiz={listQuiz}
+          handleUpdate={handleUpdate}
+          fetchDataQuiz={fetchDataQuiz}
+        />
       </div>
+      <ModelUpdateQuiz
+        show={isShowModalUpdate}
+        setShow={setIsShowModalUpdate}
+        dataUpdate={dataQuiz}
+        fetchDataQuiz={fetchDataQuiz}
+        resetData={resetData}
+      />
     </div>
   )
 }

@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
-import { getDataQuizTable } from "../../../../services/quizService";
 
 const TableQuiz = (props) => {
 
-  const [listQuiz, setListQuiz] = useState([]);
+  const { listQuiz } = props;
 
   useEffect(() => {
-    fetchDataQuiz();
+    props.fetchDataQuiz();
   }, []);
 
-  const fetchDataQuiz = async () => {
-    const data = await getDataQuizTable();
-    console.log("check data table: ", data);
-    setListQuiz(data.DT);
+
+  const handleUpdate = (dataQuiz) => {
+    props.handleUpdate(dataQuiz);
   }
+
 
   return (
     <>
@@ -40,7 +39,7 @@ const TableQuiz = (props) => {
                 <td>{item.difficulty}</td>
                 <td>
                   <button className="btn btn-info">Info</button>
-                  <button className="btn btn-warning mx-2">Update</button>
+                  <button className="btn btn-warning mx-2" onClick={() => handleUpdate(item)}>Update</button>
                   <button className="btn btn-danger">Delete</button>
                 </td>
               </tr>
