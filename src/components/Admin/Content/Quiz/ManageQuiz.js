@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import TableQuiz from "./TableQuiz";
 import { Accordion } from "react-bootstrap";
 import ModelUpdateQuiz from "./ModalUpdateQuiz";
+import ModalViewQuiz from "./ModalViewQuiz";
+import ModalDeleteQuiz from "./ModalDeleteQuiz";
 
 const ManageQuiz = (props) => {
   const [name, setName] = useState('');
@@ -19,6 +21,8 @@ const ManageQuiz = (props) => {
   const [listQuiz, setListQuiz] = useState([]);
   const [dataQuiz, setDataQuiz] = useState({});
   const [isShowModalUpdate, setIsShowModalUpdate] = useState(false);
+  const [isShowModalView, setIsShowModalView] = useState(false);
+  const [isShowModalDelete, setIsShowModalDelete] = useState(false);
   const options = [
     { value: '', label: 'Select Difficulty', isDisabled: true },
     { value: 'EASY', label: 'EASY' },
@@ -65,7 +69,16 @@ const ManageQuiz = (props) => {
   const handleUpdate = (data) => {
     setDataQuiz(data);
     setIsShowModalUpdate(true);
-    console.log("check data update: ", dataQuiz);
+  }
+
+  const handleViewInfo = (data) => {
+    setDataQuiz(data);
+    setIsShowModalView(true);
+  }
+
+  const handleDeleteQuiz = (data) => {
+    setDataQuiz(data);
+    setIsShowModalDelete(true);
   }
 
   const resetData = () => {
@@ -127,6 +140,8 @@ const ManageQuiz = (props) => {
         <TableQuiz
           listQuiz={listQuiz}
           handleUpdate={handleUpdate}
+          handleViewInfo={handleViewInfo}
+          handleDeleteQuiz={handleDeleteQuiz}
           fetchDataQuiz={fetchDataQuiz}
         />
       </div>
@@ -134,6 +149,21 @@ const ManageQuiz = (props) => {
         show={isShowModalUpdate}
         setShow={setIsShowModalUpdate}
         dataUpdate={dataQuiz}
+        fetchDataQuiz={fetchDataQuiz}
+        resetData={resetData}
+      />
+
+      <ModalViewQuiz
+        show={isShowModalView}
+        setShow={setIsShowModalView}
+        dataQuiz={dataQuiz}
+        resetData={resetData}
+      />
+
+      <ModalDeleteQuiz
+        show={isShowModalDelete}
+        setShow={setIsShowModalDelete}
+        dataQuiz={dataQuiz}
         fetchDataQuiz={fetchDataQuiz}
         resetData={resetData}
       />

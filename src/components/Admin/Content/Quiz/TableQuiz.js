@@ -13,6 +13,13 @@ const TableQuiz = (props) => {
     props.handleUpdate(dataQuiz);
   }
 
+  const handleViewInfo = (dataQuiz) => {
+    props.handleViewInfo(dataQuiz);
+  }
+
+  const handleDeleteQuiz = (dataQuiz) => {
+    props.handleDeleteQuiz(dataQuiz);
+  }
 
   return (
     <>
@@ -38,9 +45,9 @@ const TableQuiz = (props) => {
                 <td>{item.description}</td>
                 <td>{item.difficulty}</td>
                 <td>
-                  <button className="btn btn-info">Info</button>
+                  <button className="btn btn-info" onClick={() => handleViewInfo(item)}>Info</button>
                   <button className="btn btn-warning mx-2" onClick={() => handleUpdate(item)}>Update</button>
-                  <button className="btn btn-danger">Delete</button>
+                  <button className="btn btn-danger" onClick={() => handleDeleteQuiz(item)}>Delete</button>
                 </td>
               </tr>
             )

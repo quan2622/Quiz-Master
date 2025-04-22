@@ -35,6 +35,10 @@ const updateQuiz = (quizId, name, description, difficulty, quizImage) => {
   return AxiosInstance.put('api/v1/quiz', data);
 }
 
+const deleteQuiz = (quizId) => {
+  return AxiosInstance.delete(`api/v1/quiz/${quizId}`)
+}
+
 export {
   getQuizByUser,
   getDataQuiz,
@@ -42,4 +46,5 @@ export {
   addNewQuiz,
   getDataQuizTable,
   updateQuiz,
+  deleteQuiz,
 }
