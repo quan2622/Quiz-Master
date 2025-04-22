@@ -20,11 +20,11 @@ const ManageQuestion = () => {
     [
       {
         id: uuidv4(),
-        description: 'question 1',
+        description: '',
         imageFile: '',
         imageName: '',
         answers: [
-          { id: uuidv4(), description: 'answer 1', isCorrect: false },
+          { id: uuidv4(), description: '', isCorrect: false },
         ]
       },
     ]
@@ -75,7 +75,51 @@ const ManageQuestion = () => {
     }
   }
 
-  console.log(">>(render)check data: ", question);
+  const handleOnChange = (type, q_Id, data) => {
+    if (type === 'QUESTION') {
+      let question_clone = _.cloneDeep(question);
+      const index = question_clone.findIndex(item => item.id === q_Id);
+      if (index > -1) {
+        question_clone[index].description = data;
+        setQuestion(question_clone);
+      }
+    }
+  }
+
+  const handleOnChangeFile = (q_Id, event) => {
+    let question_clone = _.cloneDeep(question);
+    const index = question_clone.findIndex(item => item.id === q_Id);
+    if (index > -1 && event.target.files && event.target.files[0]) {
+      question_clone[index].imageFile = event.target.files[0];
+      question_clone[index].imageName = event.target.files[0].name;
+      setQuestion(question_clone);
+    }
+  }
+
+  const handleAnswerQuestion = (type, q_Id, a_Id, value) => {
+
+    let question_clone = _.cloneDeep(question);
+    const index = question_clone.findIndex(item => item.id === q_Id);
+    if (index > -1) {
+      question_clone[index].answers = question_clone[index].answers.map(a => {
+        if (a.id === a_Id) {
+          if (type === 'CHECKBOX') {
+            a.isCorrect = value;
+          }
+          if (type === 'ANSWER') {
+            a.description = value;
+          }
+        }
+        return a;
+      });
+      setQuestion(question_clone);
+    }
+  }
+
+  const hanleSaveQuestion = () => {
+    console.log(">>(render)check data: ", question);
+  }
+
   return (
     <div className="question-container">
       <div className="title">
@@ -98,17 +142,27 @@ const ManageQuestion = () => {
             <div className="question-content mb-5" key={item.id}>
               <div className="question">
                 <div className="form-floating description ">
-                  <input type="type" className="form-control" placeholder="name@example.com" value={item.description} />
+                  <input
+                    type="type"
+                    className="form-control"
+                    placeholder="name@example.com"
+                    value={item.description}
+                    onChange={(event) => handleOnChange('QUESTION', item.id, event.target.value)}
+                  />
                   <label>Question {index + 1}'s Description</label>
                 </div>
-                <label className="group-upload">
+                <label className="group-upload" htmlFor={`${item.id}`}>
                   <span className="title"> <MdAddPhotoAlternate className="icon-upload" /> Upload Image: </span>
-                  <input type="file" hidden />
-                  {item.imageName ?
-                    <span>{item.imageName}</span>
-                    :
-                    <span>0 file is uploaded</span>
-                  }
+                  <input
+                    id={`${item.id}`}
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    onChange={(event) => handleOnChangeFile(item.id, event)}
+                  />
+
+                  <span>{item.imageFile ? `${item.imageName}` : '0 file was uploaded'}</span>
+
                 </label>
                 <div className="btn-add">
                   <span onClick={() => handleAddRemoveQuestion('ADD', '')}><FiPlusCircle className="icon-add" /></span>
@@ -121,9 +175,20 @@ const ManageQuestion = () => {
                 {item.answers && item.answers.length > 0 && item.answers.map((a, index) => {
                   return (
                     <div className="answer" key={a.id}>
-                      <input type={'checkbox'} className="check-box isCorrect" />
+                      <input
+                        type={'checkbox'}
+                        className="check-box isCorrect"
+                        checked={a.isCorrect}
+                        onChange={(event) => handleAnswerQuestion('CHECKBOX', item.id, a.id, event.target.checked)}
+                      />
                       <div className="form-floating answer-description ">
-                        <input type="type" className="form-control" placeholder="Answer 1" value={a.description} />
+                        <input
+                          type="type"
+                          className="form-control"
+                          placeholder="Answer 1"
+                          value={a.description}
+                          onChange={(event) => handleAnswerQuestion('ANSWER', item.id, a.id, event.target.value)}
+                        />
                         <label>Answer {index + 1}</label>
                       </div>
                       <div className="btn-add">
@@ -139,8 +204,12 @@ const ManageQuestion = () => {
             </div>
           )
         })}
-
       </div>
+      {question && question.length > 0 &&
+        <div>
+          <button className="btn btn-warning" onClick={() => hanleSaveQuestion()} >Save Question</button>
+        </div>
+      }
     </div>
   )
 }
