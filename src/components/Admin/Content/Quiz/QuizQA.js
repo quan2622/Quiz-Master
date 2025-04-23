@@ -7,9 +7,8 @@ import { MdAddPhotoAlternate } from "react-icons/md";
 import { v4 as uuidv4 } from 'uuid';
 import _ from "lodash";
 import Lightbox from "react-awesome-lightbox";
-import { getDataQuizTable, postCreateNewAnswerForQuestion, postCreateNewQuestionForQuiz } from "../../../../services/quizService";
+import { getDataQuizTable, getQuizWithQuestionAnswer, postCreateNewAnswerForQuestion, postCreateNewQuestionForQuiz } from "../../../../services/quizService";
 import { toast } from "react-toastify";
-import { Toast } from "react-bootstrap";
 
 const QuizQA = () => {
   const init_question = [
@@ -33,19 +32,56 @@ const QuizQA = () => {
   const [question, setQuestion] = useState(init_question);
 
   const [listQuiz, setListQuiz] = useState([]);
-  const [selectedQuiz, setSelectedQuiz] = useState(null);
+  const [selectedQuiz, setSelectedQuiz] = useState({});
 
   const [isPreviewImage, setIsPreviewImage] = useState(false);
   const [dataImage, setDataImage] = useState({
     title: '',
     url: '',
   });
-
+  console.log("check selected: ", selectedQuiz);
   useEffect(() => {
     fetchListQuiz()
   }, []);
 
-  // console.log('check list quiz: ', listQuiz);
+  useEffect(() => {
+    fetchQuizWithQA();
+  }, [selectedQuiz]);
+
+  // convert Base64 String to javascript file object
+  const urltoFile = (url, filename, mimeType) => {
+    return fetch(url)
+      .then(res => res.arrayBuffer())
+      .then(buf => new File([buf], filename, { type: mimeType }));
+  }
+
+  const fetchQuizWithQA = async () => {
+    if (!_.isEmpty(selectedQuiz)) {
+      const res = await getQuizWithQuestionAnswer(selectedQuiz.value);
+      console.log('check QA: ', res.DT);
+      if (res && res.DT) {
+        let question_clone = res.DT.qa;
+        for (let q = 0; q < question_clone.length; q++) {
+          let question = question_clone[q];
+
+          question.is_valid_q = true;
+          question.is_valid_a = true;
+          if (question.imageFile) {
+            question.imageFile = await urltoFile(`data:image/png;base64,${question.imageFile}`, `Question-${question.id}.png`, 'image/png');
+            question.imageName = `Question-${question.id}.png`;
+            console.log("image convert: ", question.imageFile);
+          }
+          for (let a = 0; a < question.answers.length; a++) {
+            question.answers[a].is_valid = true;
+          }
+        }
+        console.log(">>check data question: ", question_clone);
+        setQuestion(question_clone);
+      }
+    }
+  }
+
+
   const fetchListQuiz = async () => {
     // API get list quiz
     const res = await getDataQuizTable();
@@ -218,21 +254,6 @@ const QuizQA = () => {
 
     // Submit question
 
-    // await Promise.all(question.map(async (q) => {
-    //   const new_q = await postCreateNewQuestionForQuiz(
-    //     +selectedQuiz.value,
-    //     q.description,
-    //     q.imageFile);
-
-    //   // Submit answer
-    //   await Promise.all(q.answers.map(async (answer) => {
-    //     await postCreateNewAnswerForQuestion(
-    //       answer.description,
-    //       answer.isCorrect,
-    //       new_q.DT.id);
-    //   }));
-    // }));
-
     for (const q of question) {
       const new_q = await postCreateNewQuestionForQuiz(
         +selectedQuiz.value,
@@ -259,9 +280,9 @@ const QuizQA = () => {
     setIsPreviewImage(true);
   }
 
-  console.log("data question: ", question);
+  // console.log("data question: ", question);
   return (
-    <div className="question-container">
+    <div className="qa-container">
       <div className="add-new-question">
         <div className="col-7 form-group select-quiz">
           <label className="mb-2">Select Quiz</label>

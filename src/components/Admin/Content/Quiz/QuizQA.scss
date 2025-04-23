@@ -1,4 +1,4 @@
-.question-container {
+.qa-container {
   padding: 15px;
 
   .title {
@@ -41,6 +41,7 @@
           font-weight: 500;
           cursor: default;
           border: none;
+          margin-bottom: 0;
 
           .icon-upload {
             font-size: 24px;

@@ -78,7 +78,7 @@ const AssignQuiz = (props) => {
       </div>
       <hr />
       <div className="table-list-user mt-3">
-        <table class="table table-bordered table-hover border-primary">
+        <table className="table table-bordered table-hover border-primary">
           <thead>
             <tr>
               <th className="text-center" style={{ 'width': '100px' }}>Assigned</th>
