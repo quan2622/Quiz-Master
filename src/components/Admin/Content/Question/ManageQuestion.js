@@ -9,24 +9,32 @@ import _ from "lodash";
 import Lightbox from "react-awesome-lightbox";
 import { getDataQuizTable, postCreateNewAnswerForQuestion, postCreateNewQuestionForQuiz } from "../../../../services/quizService";
 import { toast } from "react-toastify";
+import { Toast } from "react-bootstrap";
 
 const ManageQuestion = () => {
+  const init_question = [
+    {
+      id: uuidv4(),
+      description: '',
+      imageFile: '',
+      imageName: '',
+      is_valid_q: true,
+      is_valid_a: true,
+      answers: [
+        {
+          id: uuidv4(),
+          description: '',
+          isCorrect: false,
+          is_valid: true,
+        },
+      ]
+    },
+  ];
+  const [question, setQuestion] = useState(init_question);
 
   const [listQuiz, setListQuiz] = useState([]);
+
   const [selectedQuiz, setSelectedQuiz] = useState(null);
-  const [question, setQuestion] = useState(
-    [
-      {
-        id: uuidv4(),
-        description: '',
-        imageFile: '',
-        imageName: '',
-        answers: [
-          { id: uuidv4(), description: '', isCorrect: false },
-        ]
-      },
-    ]
-  )
   const [isPreviewImage, setIsPreviewImage] = useState(false);
   const [dataImage, setDataImage] = useState({
     title: '',
@@ -59,8 +67,10 @@ const ManageQuestion = () => {
         description: '',
         imageFile: '',
         imageName: '',
+        is_valid_q: true,
+        is_valid_a: true,
         answers: [
-          { id: uuidv4(), description: '', isCorrect: false },
+          { id: uuidv4(), description: '', isCorrect: false, is_valid: true },
         ]
       };
       setQuestion([...question, new_question]);
@@ -78,7 +88,8 @@ const ManageQuestion = () => {
       const new_answer = {
         id: uuidv4(),
         description: '',
-        isCorrect: false
+        isCorrect: false,
+        is_valid: true,
       };
       question_clone = question_clone.map(item => {
         if (item.id === q_Id) {
@@ -139,30 +150,105 @@ const ManageQuestion = () => {
 
   const hanleSaveQuestion = async () => {
     // todo
-    // validate
+    if (!selectedQuiz) {
+      toast.warn('Please select a quiz!');
+      return;
+    }
 
-    console.log(">>(render)check data: ", question, selectedQuiz);
+
+    let isValidate = true;
+    let index_question = -1;
+    let index_answer = -1;
+    let count_correct = 0;
+    let question_clone = _.cloneDeep(question);
+
+    // validate question
+    let isValidateQuestion = true;
+    for (let q = 0; q < question.length; q++) {
+      if (!question[q].description) {
+        isValidateQuestion = false;
+        index_question = q;
+        break;
+      }
+      question_clone[q].is_valid_q = true;
+    }
+
+    if (isValidateQuestion === false) {
+      question_clone[index_question].is_valid_q = false;
+      toast.error(`Not empty description for Question ${index_question + 1}`);
+      setQuestion(question_clone);
+      return;
+    }
+
+    // validate answer
+    for (let q = 0; q < question_clone.length; q++) {
+      count_correct = 0;
+      for (let a = 0; a < question_clone[q].answers.length; a++) {
+        if (!question_clone[q].answers[a].description) {
+          isValidate = false;
+          index_answer = a;
+          break;
+        }
+        question_clone[q].answers[a].is_valid = true;
+
+        if (question_clone[q].answers[a].isCorrect == true) {
+          question_clone[q].is_valid_a = true;
+          count_correct += 1;
+        }
+      }
+      if (isValidate == false || +count_correct === 0) {
+        index_question = q;
+        break;
+      }
+    }
+
+    if (isValidate == false) {
+      question_clone[index_question].answers[index_answer].is_valid = false;
+      toast.error(`Not empty answer ${index_answer + 1} at Question ${index_question + 1}`);
+      setQuestion(question_clone);
+      return;
+    }
+
+    if (count_correct === 0) {
+      question_clone[index_question].is_valid_a = false;
+      toast.warn(`Please choose the correct answer at Question ${index_question + 1}`);
+      setQuestion(question_clone);
+      return;
+    }
 
     // Submit question
-    if (selectedQuiz) {
-      await Promise.all(question.map(async (q) => {
-        const new_q = await postCreateNewQuestionForQuiz(
-          +selectedQuiz.value,
-          q.description,
-          q.imageFile);
 
-        // Submit answer
-        await Promise.all(q.answers.map(async (answer) => {
-          await postCreateNewAnswerForQuestion(
-            answer.description,
-            answer.isCorrect,
-            new_q.DT.id);
-        }));
-      }));
+    // await Promise.all(question.map(async (q) => {
+    //   const new_q = await postCreateNewQuestionForQuiz(
+    //     +selectedQuiz.value,
+    //     q.description,
+    //     q.imageFile);
 
-    } else {
-      toast.warn('Please select quiz!');
+    //   // Submit answer
+    //   await Promise.all(q.answers.map(async (answer) => {
+    //     await postCreateNewAnswerForQuestion(
+    //       answer.description,
+    //       answer.isCorrect,
+    //       new_q.DT.id);
+    //   }));
+    // }));
+
+    for (const q of question) {
+      const new_q = await postCreateNewQuestionForQuiz(
+        +selectedQuiz.value,
+        q.description,
+        q.imageFile);
+      // Submit answer
+
+      for (const answer of q.answers) {
+        await postCreateNewAnswerForQuestion(
+          answer.description,
+          answer.isCorrect,
+          new_q.DT.id);
+      }
     }
+    toast.success('Create questions and answers succed');
+    setQuestion(init_question);
   }
 
   const handleShowPreview = (file, title_image) => {
@@ -173,7 +259,7 @@ const ManageQuestion = () => {
     setIsPreviewImage(true);
   }
 
-  // console.log("data question: ", question);
+  console.log("data question: ", question);
   return (
     <div className="question-container">
       <div className="title">
@@ -197,13 +283,24 @@ const ManageQuestion = () => {
               <div className="question">
                 <div className="form-floating description ">
                   <input
+                    id={item.id}
                     type="type"
-                    className="form-control"
+                    className={`form-control ${item.is_valid_q && item.is_valid_a ? '' : 'is-invalid'}`}
                     placeholder="name@example.com"
                     value={item.description}
                     onChange={(event) => handleOnChange('QUESTION', item.id, event.target.value)}
                   />
                   <label>Question {index + 1}'s Description</label>
+                  {item.is_valid_q === false &&
+                    <div id={`${item.id}Feedback`} className="invalid-feedback">
+                      Please enter description for this question!
+                    </div>
+                  }
+                  {item.is_valid_a === false &&
+                    <div id={`${item.id}Feedback`} className="invalid-feedback">
+                      Please choose correct answer for this question!
+                    </div>
+                  }
                 </div>
                 <div className="group-upload" >
                   <label className="title" htmlFor={`${item.id}`}>
@@ -242,13 +339,20 @@ const ManageQuestion = () => {
                       />
                       <div className="form-floating answer-description ">
                         <input
+                          id={a.id}
                           type="type"
-                          className="form-control"
+                          className={`form-control ${a.is_valid ? '' : 'is-invalid'}`}
                           placeholder="Answer 1"
                           value={a.description}
                           onChange={(event) => handleAnswerQuestion('ANSWER', item.id, a.id, event.target.value)}
+                          aria-describedby={`${a.id}Feedback`}
                         />
                         <label>Answer {index + 1}</label>
+                        {a.is_valid === false &&
+                          <div id={`${a.id}Feedback`} className="invalid-feedback">
+                            Please enter this answer description!
+                          </div>
+                        }
                       </div>
                       <div className="btn-add">
                         <span onClick={() => handleAddRemoveAnswer('ADD', item.id, '')} ><TiPlus className="icon-add" /></span>

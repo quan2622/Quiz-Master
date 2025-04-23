@@ -7,90 +7,50 @@
     font-weight: 500;
   }
   .select-quiz {
-    #react-select-2-listbox {
+    #react-select-7-listbox {
       z-index: 10;
     }
   }
 
-  .question {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-
-    .description {
-      max-width: 58.4%;
-      flex: 1;
-    }
-    .group-upload {
-      max-width: 24%;
-      flex: 1;
-      // overflow: hidden;
-      margin-left: 15px;
-      cursor: pointer;
-      color: #9068ff;
-
-      &:hover {
-        color: #4400ff;
-      }
-      .title {
-        font-size: 16px;
-        font-weight: 500;
-        cursor: default;
-
-        .icon-upload {
-          font-size: 24px;
-        }
-      }
-      span {
-        cursor: pointer;
-      }
-    }
-    .btn-add {
-      max-width: 10%;
-
-      .icon-add {
-        font-size: 28px;
-        color: #2596ff;
-        cursor: pointer;
-        &:hover {
-          color: #3a47f7;
-        }
-      }
-
-      .icon-remove {
-        margin-left: 8px;
-        font-size: 28px;
-        cursor: pointer;
-        color: #e8771c;
-
-        &:hover {
-          color: #ff7300;
-        }
-      }
-    }
-  }
-  .answer-container {
-    margin-top: 28px;
-    .answer {
-      margin-top: 20px;
+  .question-content {
+    position: relative;
+    z-index: 0;
+    .question {
       display: flex;
+      gap: 12px;
       align-items: center;
-      gap: 10px;
-      .check-box {
-        // max-width: 10%;
-        margin: 0 10px 0 20px;
-        width: 20px;
-        height: 20px;
 
-        &.isCorrect {
-        }
-      }
-      .answer-description {
-        max-width: 53.6%;
+      .description {
+        max-width: 58.4%;
         flex: 1;
       }
+      .group-upload {
+        max-width: 24%;
+        flex: 1;
+        // overflow: hidden;
+        margin-left: 15px;
+        cursor: pointer;
+        color: #9068ff;
+
+        &:hover {
+          color: #4400ff;
+        }
+        .title {
+          font-size: 16px;
+          font-weight: 500;
+          cursor: default;
+
+          .icon-upload {
+            font-size: 24px;
+          }
+        }
+        span {
+          cursor: pointer;
+        }
+      }
       .btn-add {
-        width: 30%;
+        max-width: 10%;
+
         .icon-add {
           font-size: 28px;
           color: #2596ff;
@@ -108,6 +68,50 @@
 
           &:hover {
             color: #ff7300;
+          }
+        }
+      }
+    }
+    .answer-container {
+      margin-top: 28px;
+      .answer {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        .check-box {
+          // max-width: 10%;
+          margin: 0 10px 0 20px;
+          width: 20px;
+          height: 20px;
+
+          &.isCorrect {
+          }
+        }
+        .answer-description {
+          max-width: 53.6%;
+          flex: 1;
+        }
+        .btn-add {
+          width: 30%;
+          .icon-add {
+            font-size: 28px;
+            color: #2596ff;
+            cursor: pointer;
+            &:hover {
+              color: #3a47f7;
+            }
+          }
+
+          .icon-remove {
+            margin-left: 8px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #e8771c;
+
+            &:hover {
+              color: #ff7300;
+            }
           }
         }
       }
