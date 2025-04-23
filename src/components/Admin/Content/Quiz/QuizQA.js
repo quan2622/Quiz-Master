@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Select from 'react-select';
-import "./ManageQuestion.scss"
+import "./QuizQA.scss"
 import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
 import { TiMinus, TiPlus } from "react-icons/ti";
 import { MdAddPhotoAlternate } from "react-icons/md";
@@ -11,7 +11,7 @@ import { getDataQuizTable, postCreateNewAnswerForQuestion, postCreateNewQuestion
 import { toast } from "react-toastify";
 import { Toast } from "react-bootstrap";
 
-const ManageQuestion = () => {
+const QuizQA = () => {
   const init_question = [
     {
       id: uuidv4(),
@@ -33,8 +33,8 @@ const ManageQuestion = () => {
   const [question, setQuestion] = useState(init_question);
 
   const [listQuiz, setListQuiz] = useState([]);
-
   const [selectedQuiz, setSelectedQuiz] = useState(null);
+
   const [isPreviewImage, setIsPreviewImage] = useState(false);
   const [dataImage, setDataImage] = useState({
     title: '',
@@ -262,9 +262,6 @@ const ManageQuestion = () => {
   console.log("data question: ", question);
   return (
     <div className="question-container">
-      <div className="title">
-        Manage Question
-      </div>
       <div className="add-new-question">
         <div className="col-7 form-group select-quiz">
           <label className="mb-2">Select Quiz</label>
@@ -283,12 +280,12 @@ const ManageQuestion = () => {
               <div className="question">
                 <div className="form-floating description ">
                   <input
+                    id={item.id}
                     type="type"
                     className={`form-control ${item.is_valid_q && item.is_valid_a ? '' : 'is-invalid'}`}
                     placeholder="name@example.com"
                     value={item.description}
                     onChange={(event) => handleOnChange('QUESTION', item.id, event.target.value)}
-                    aria-describedby={`${item.id}Feedback`}
                   />
                   <label>Question {index + 1}'s Description</label>
                   {item.is_valid_q === false &&
@@ -315,12 +312,7 @@ const ManageQuestion = () => {
                   />
                   <span>
                     &nbsp; {item.imageFile ?
-                      <span
-                        className="name-img-preview"
-                        onClick={() => handleShowPreview(item.imageFile, item.imageName)}
-                      >
-                        {item.imageName}
-                      </span>
+                      <span onClick={() => handleShowPreview(item.imageFile, item.imageName)}> {item.imageName}</span>
                       :
                       '0 file was uploaded'}
                   </span>
@@ -390,4 +382,4 @@ const ManageQuestion = () => {
     </div>
   )
 }
-export default ManageQuestion;
+export default QuizQA;

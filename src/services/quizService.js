@@ -51,6 +51,10 @@ const postCreateNewAnswerForQuestion = (description, correct_answer, question_id
   return AxiosInstance.post('api/v1/answer', { description, correct_answer, question_id, });
 }
 
+const postAssignQuizToUser = (quizId, userId) => {
+  return AxiosInstance.post('api/v1/quiz-assign-to-user', { quizId, userId });
+}
+
 export {
   getQuizByUser,
   getDataQuiz,
@@ -61,4 +65,5 @@ export {
   deleteQuiz,
   postCreateNewQuestionForQuiz,
   postCreateNewAnswerForQuestion,
+  postAssignQuizToUser,
 }

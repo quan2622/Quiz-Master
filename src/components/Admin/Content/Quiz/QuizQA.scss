@@ -25,7 +25,7 @@
         flex: 1;
       }
       .group-upload {
-        max-width: 24%;
+        max-width: 26%;
         flex: 1;
         // overflow: hidden;
         margin-left: 15px;
@@ -36,9 +36,11 @@
           color: #4400ff;
         }
         .title {
+          color: #9068ff;
           font-size: 16px;
           font-weight: 500;
           cursor: default;
+          border: none;
 
           .icon-upload {
             font-size: 24px;
@@ -46,13 +48,6 @@
         }
         span {
           cursor: pointer;
-        }
-        .name-img-preview {
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: block;
-          max-width: 90%;
         }
       }
       .btn-add {
