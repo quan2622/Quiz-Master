@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from 'react-select';
 import "./ManageQuestion.scss"
 import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
@@ -6,16 +6,14 @@ import { TiMinus, TiPlus } from "react-icons/ti";
 import { MdAddPhotoAlternate } from "react-icons/md";
 import { v4 as uuidv4 } from 'uuid';
 import _ from "lodash";
+import Lightbox from "react-awesome-lightbox";
+import { getDataQuizTable, postCreateNewAnswerForQuestion, postCreateNewQuestionForQuiz } from "../../../../services/quizService";
+import { toast } from "react-toastify";
 
 const ManageQuestion = () => {
 
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ];
+  const [listQuiz, setListQuiz] = useState([]);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
-
   const [question, setQuestion] = useState(
     [
       {
@@ -29,7 +27,30 @@ const ManageQuestion = () => {
       },
     ]
   )
+  const [isPreviewImage, setIsPreviewImage] = useState(false);
+  const [dataImage, setDataImage] = useState({
+    title: '',
+    url: '',
+  });
 
+  useEffect(() => {
+    fetchListQuiz()
+  }, []);
+
+  // console.log('check list quiz: ', listQuiz);
+  const fetchListQuiz = async () => {
+    // API get list quiz
+    const res = await getDataQuizTable();
+    if (res.EC === 0) {
+      let new_quiz = res.DT.map(item => {
+        return {
+          value: item.id,
+          label: `${item.id} - ${item.name}`,
+        }
+      })
+      setListQuiz(new_quiz);
+    }
+  }
 
   const handleAddRemoveQuestion = (type, id) => {
     if (type === 'ADD') {
@@ -116,22 +137,55 @@ const ManageQuestion = () => {
     }
   }
 
-  const hanleSaveQuestion = () => {
-    console.log(">>(render)check data: ", question);
+  const hanleSaveQuestion = async () => {
+    // todo
+    // validate
+
+    console.log(">>(render)check data: ", question, selectedQuiz);
+
+    // Submit question
+    if (selectedQuiz) {
+      await Promise.all(question.map(async (q) => {
+        const new_q = await postCreateNewQuestionForQuiz(
+          +selectedQuiz.value,
+          q.description,
+          q.imageFile);
+
+        // Submit answer
+        await Promise.all(q.answers.map(async (answer) => {
+          await postCreateNewAnswerForQuestion(
+            answer.description,
+            answer.isCorrect,
+            new_q.DT.id);
+        }));
+      }));
+
+    } else {
+      toast.warn('Please select quiz!');
+    }
   }
 
+  const handleShowPreview = (file, title_image) => {
+    setDataImage({
+      title: title_image,
+      url: URL.createObjectURL(file)
+    })
+    setIsPreviewImage(true);
+  }
+
+  // console.log("data question: ", question);
   return (
     <div className="question-container">
       <div className="title">
         Manage Question
       </div>
       <div className="add-new-question">
-        <div className="col-7 form-group">
+        <div className="col-7 form-group select-quiz">
           <label className="mb-2">Select Quiz</label>
           <Select
             defaultValue={selectedQuiz}
             onChange={setSelectedQuiz}
-            options={options}
+            options={listQuiz}
           />
         </div>
         <div className="mt-3 mb-2">
@@ -151,8 +205,10 @@ const ManageQuestion = () => {
                   />
                   <label>Question {index + 1}'s Description</label>
                 </div>
-                <label className="group-upload" htmlFor={`${item.id}`}>
-                  <span className="title"> <MdAddPhotoAlternate className="icon-upload" /> Upload Image: </span>
+                <div className="group-upload" >
+                  <label className="title" htmlFor={`${item.id}`}>
+                    <MdAddPhotoAlternate className="icon-upload" /> Upload Image:
+                  </label>
                   <input
                     id={`${item.id}`}
                     type="file"
@@ -160,10 +216,13 @@ const ManageQuestion = () => {
                     hidden
                     onChange={(event) => handleOnChangeFile(item.id, event)}
                   />
-
-                  <span>{item.imageFile ? `${item.imageName}` : '0 file was uploaded'}</span>
-
-                </label>
+                  <span>
+                    &nbsp; {item.imageFile ?
+                      <span onClick={() => handleShowPreview(item.imageFile, item.imageName)}> {item.imageName}</span>
+                      :
+                      '0 file was uploaded'}
+                  </span>
+                </div>
                 <div className="btn-add">
                   <span onClick={() => handleAddRemoveQuestion('ADD', '')}><FiPlusCircle className="icon-add" /></span>
                   {question && question.length > 1 &&
@@ -209,6 +268,15 @@ const ManageQuestion = () => {
         <div>
           <button className="btn btn-warning" onClick={() => hanleSaveQuestion()} >Save Question</button>
         </div>
+      }
+
+      {isPreviewImage === true &&
+        <Lightbox
+          image={dataImage.url}
+          title={dataImage.title}
+          onClose={() => setIsPreviewImage(false)}
+        >
+        </Lightbox>
       }
     </div>
   )

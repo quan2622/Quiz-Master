@@ -39,6 +39,18 @@ const deleteQuiz = (quizId) => {
   return AxiosInstance.delete(`api/v1/quiz/${quizId}`)
 }
 
+const postCreateNewQuestionForQuiz = (quiz_id, description, questionImage) => {
+  const data = new FormData();
+  data.append('quiz_id', quiz_id);
+  data.append('description', description);
+  data.append('questionImage', questionImage);
+  return AxiosInstance.post('api/v1/question', data);
+}
+
+const postCreateNewAnswerForQuestion = (description, correct_answer, question_id) => {
+  return AxiosInstance.post('api/v1/answer', { description, correct_answer, question_id, });
+}
+
 export {
   getQuizByUser,
   getDataQuiz,
@@ -47,4 +59,6 @@ export {
   getDataQuizTable,
   updateQuiz,
   deleteQuiz,
+  postCreateNewQuestionForQuiz,
+  postCreateNewAnswerForQuestion,
 }

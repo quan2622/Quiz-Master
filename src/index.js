@@ -4,8 +4,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store';
+
+// Plugin CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-perfect-scrollbar/dist/css/styles.css';
+import 'react-toastify/dist/ReactToastify.css';
+import "react-awesome-lightbox/build/style.css";
+
 import {
   createBrowserRouter,
   Navigate,
@@ -19,8 +24,8 @@ import DashBoard from "./components/Admin/Content/DashBoard";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 
+// Toast
 import { Bounce, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
 
 // loading on top page
 import 'nprogress/nprogress.css'
