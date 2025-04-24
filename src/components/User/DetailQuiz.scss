@@ -151,6 +151,11 @@
           &.selected {
             background: #d17711;
           }
+
+          &.clicked {
+            // background: #866a8a;
+            box-shadow: 1px 1px 10px #887f8b, -1px -1px 10px #887f8b;
+          }
         }
       }
     }

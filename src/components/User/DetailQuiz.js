@@ -84,7 +84,7 @@ const DetailQuiz = (props) => {
   }
 
   const handleFinishQuiz = async () => {
-    console.log("check quiz submit: ", dataQuiz);
+    // console.log("check quiz submit: ", dataQuiz);
     let payload = {
       quizId: +quizId,
       answers: [],
@@ -134,14 +134,17 @@ const DetailQuiz = (props) => {
           </div>
           <div className="footer">
             <button className={`btn-prev ${currentQuestion == 0 ? "disabled" : ""}`} onClick={() => handlePrev()}>Prev</button>
-            <button className="btn-next" onClick={() => handleNext()}>Next</button>
+            <button className={`btn-next ${currentQuestion == dataQuiz.length - 1 ? "disabled" : ""}`} onClick={() => handleNext()}>Next</button>
           </div>
         </div>
       </div>
       <div className="right-content">
         <RightContent
           dataQuiz={dataQuiz}
-          handleFinishQuiz={handleFinishQuiz} />
+          handleFinishQuiz={handleFinishQuiz}
+          setQuestionIndex={setCurrentQuestion}
+          currentQuestion={currentQuestion}
+        />
       </div>
       <ModalResult
         show={showResult}

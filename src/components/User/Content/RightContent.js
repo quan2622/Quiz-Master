@@ -1,17 +1,44 @@
+import { useEffect, useLayoutEffect, useRef } from "react";
+import CountDown from "./CountDown";
+
 const RightContent = (props) => {
-  const { dataQuiz, handleFinishQuiz } = props;
-  console.log('check data quiz: ', dataQuiz);
+  const refItem = useRef([]);
 
+  const { dataQuiz, handleFinishQuiz, setQuestionIndex, currentQuestion } = props;
+  // console.log('check data quiz: ', dataQuiz);
 
+  const onTimeUp = () => {
+    handleFinishQuiz();
+  }
+
+  const getQuestionClass = (question, index) => {
+    let init_class = 'question-item';
+    if (index === currentQuestion) {
+      init_class = `${init_class} clicked`;
+    }
+    if (question && question.answer.length > 0) {
+      let isAnswered = question.answer.some(a => a.isSelected === true);
+      // console.log('check question', question, ' - ', isAnswered);
+      if (isAnswered) {
+        return `${init_class} selected`
+      }
+    }
+    return init_class;
+  }
+
+  const handleSelectQuestion = (currentQuestion) => {
+    // console.log('check ref: ', refItem.current);
+    // DÙNG REF ĐỂ QUẢN LÝ TRẠNG THÁI SELECT CÂU HỎI PHẦN RIGHT CONTENT
+    // if (refItem.current && refItem.current[currentQuestion]) {
+    //   refItem.current.forEach(option => option.classList.remove('clicked'));
+    //   refItem.current[currentQuestion]?.classList.add('clicked');
+    // }
+    setQuestionIndex(currentQuestion);
+  }
 
   return (
     <div className="right-container">
-      <div className="section-1">
-        <span className="title-section">Time left</span>
-        <div className="clock-container">
-          1:00:00
-        </div>
-      </div>
+      <CountDown onTimeUp={onTimeUp} />
       <hr />
       <div className="section-2">
         <span className="title-section">List question</span>
@@ -19,7 +46,12 @@ const RightContent = (props) => {
           {dataQuiz && dataQuiz.length > 0 &&
             dataQuiz.map((item, index) => {
               return (
-                <div className="question-item" key={`a_index-${index}`}>
+                <div
+                  className={getQuestionClass(item, index)}
+                  key={`a_index-${index}`}
+                  onClick={() => handleSelectQuestion(index)}
+                  ref={(element) => refItem.current[index] = element}
+                >
                   {index + 1}
                 </div>
               )
