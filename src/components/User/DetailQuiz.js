@@ -6,6 +6,7 @@ import "./DetailQuiz.scss"
 import Question from "./Question";
 import { toast } from "react-toastify";
 import ModalResult from "./ModalResult";
+import RightContent from "./Content/RightContent";
 
 const DetailQuiz = (props) => {
   const params = useParams();
@@ -138,46 +139,9 @@ const DetailQuiz = (props) => {
         </div>
       </div>
       <div className="right-content">
-        <div className="section-1">
-          <span className="title-section">Time left</span>
-          <div className="clock-container">
-            1:00:00
-          </div>
-        </div>
-        <hr />
-        <div className="section-2">
-          <span className="title-section">List question</span>
-          <div className="question-container">
-            <div className="question-item">
-              1
-            </div>
-            <div className="question-item selected">
-              2
-            </div>
-            <div className="question-item">
-              3
-            </div>
-            <div className="question-item">
-              3
-            </div>
-            <div className="question-item">
-              3
-            </div>
-            <div className="question-item">
-              3
-            </div>
-            <div className="question-item">
-              3
-            </div>
-            <div className="question-item">
-              3
-            </div>
-          </div>
-        </div>
-        <hr />
-        <div className="section-3">
-          <button onClick={() => handleFinishQuiz()}>Submit quiz</button>
-        </div>
+        <RightContent
+          dataQuiz={dataQuiz}
+          handleFinishQuiz={handleFinishQuiz} />
       </div>
       <ModalResult
         show={showResult}
