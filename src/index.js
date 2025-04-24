@@ -35,6 +35,7 @@ import DetailQuiz from "./components/User/DetailQuiz";
 import NotFound from "./components/Home/NotFound";
 import ManageQuiz from "./components/Admin/Content/Quiz/ManageQuiz";
 import ManageQuestion from "./components/Admin/Content/Question/ManageQuestion";
+import PrivateRoute from "./routes/PrivateRoute";
 
 // import { BrowserRouter } from "react-router-dom";
 
@@ -55,14 +56,22 @@ let router = createBrowserRouter([
     Component: App,
     children: [
       { index: true, Component: HomePage },
-      { path: "users", Component: ListQuiz },
+      {
+        path: "users", element:
+          <PrivateRoute>
+            <ListQuiz />
+          </PrivateRoute>
+      },
     ],
   },
   { path: 'home', element: <Navigate to="/" replace /> },
   { path: 'quiz/:id', Component: DetailQuiz },
   {
     path: "/admin",
-    Component: Admin,
+    element:
+      <PrivateRoute>
+        <Admin />
+      </PrivateRoute>,
     children: [
       { index: true, Component: DashBoard },
       { path: 'manage-users', Component: ManageUser },
