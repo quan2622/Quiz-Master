@@ -59,6 +59,10 @@ const getQuizWithQuestionAnswer = (quizId) => {
   return AxiosInstance.get(`api/v1/quiz-with-qa/${quizId}`);
 }
 
+const postUpsertQA = (data) => {
+  return AxiosInstance.post('api/v1/quiz-upsert-qa', { ...data });
+}
+
 export {
   getQuizByUser,
   getDataQuiz,
@@ -71,4 +75,5 @@ export {
   postCreateNewAnswerForQuestion,
   postAssignQuizToUser,
   getQuizWithQuestionAnswer,
+  postUpsertQA,
 }

@@ -7,7 +7,7 @@ import { MdAddPhotoAlternate } from "react-icons/md";
 import { v4 as uuidv4 } from 'uuid';
 import _ from "lodash";
 import Lightbox from "react-awesome-lightbox";
-import { getDataQuizTable, getQuizWithQuestionAnswer, postCreateNewAnswerForQuestion, postCreateNewQuestionForQuiz } from "../../../../services/quizService";
+import { getDataQuizTable, getQuizWithQuestionAnswer, postUpsertQA } from "../../../../services/quizService";
 import { toast } from "react-toastify";
 
 const QuizQA = () => {
@@ -39,7 +39,7 @@ const QuizQA = () => {
     title: '',
     url: '',
   });
-  console.log("check selected: ", selectedQuiz);
+
   useEffect(() => {
     fetchListQuiz()
   }, []);
@@ -69,13 +69,13 @@ const QuizQA = () => {
           if (question.imageFile) {
             question.imageFile = await urltoFile(`data:image/png;base64,${question.imageFile}`, `Question-${question.id}.png`, 'image/png');
             question.imageName = `Question-${question.id}.png`;
-            console.log("image convert: ", question.imageFile);
+            // console.log("image convert: ", question.imageFile);
           }
           for (let a = 0; a < question.answers.length; a++) {
             question.answers[a].is_valid = true;
           }
         }
-        console.log(">>check data question: ", question_clone);
+        // console.log(">>check data question: ", question_clone);
         setQuestion(question_clone);
       }
     }
@@ -253,24 +253,35 @@ const QuizQA = () => {
     }
 
     // Submit question
-
-    for (const q of question) {
-      const new_q = await postCreateNewQuestionForQuiz(
-        +selectedQuiz.value,
-        q.description,
-        q.imageFile);
-      // Submit answer
-
-      for (const answer of q.answers) {
-        await postCreateNewAnswerForQuestion(
-          answer.description,
-          answer.isCorrect,
-          new_q.DT.id);
+    let data = _.cloneDeep(question);
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].imageFile) {
+        data[i].imageFile = await toBase64(data[i].imageFile);
       }
+
+      data[i] = _.omit(data[i], ['is_valid_a', ['is_valid_q']]);
+      data[i].answers = _.map(data[i].answers, answer => _.omit(answer, ['is_valid']));
     }
-    toast.success('Create questions and answers succed');
-    setQuestion(init_question);
+
+    let res = await postUpsertQA({
+      quizId: selectedQuiz.value,
+      questions: data,
+    })
+
+    // console.log(">>check res: ", res);
+    if (res && res.EC == 0) {
+      toast.success(res.EM);
+      fetchQuizWithQA();
+    }
   }
+
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+  });
+
 
   const handleShowPreview = (file, title_image) => {
     setDataImage({
@@ -301,7 +312,7 @@ const QuizQA = () => {
               <div className="question">
                 <div className="form-floating description ">
                   <input
-                    id={item.id}
+                    // id={item.id}
                     type="type"
                     className={`form-control ${item.is_valid_q && item.is_valid_a ? '' : 'is-invalid'}`}
                     placeholder="name@example.com"
@@ -322,7 +333,7 @@ const QuizQA = () => {
                 </div>
                 <div className="group-upload" >
                   <label className="title" htmlFor={`${item.id}`}>
-                    <MdAddPhotoAlternate className="icon-upload" /> Upload Image:
+                    <MdAddPhotoAlternate className="icon-upload" /> Upload Image: &nbsp;
                   </label>
                   <input
                     id={`${item.id}`}
@@ -332,8 +343,10 @@ const QuizQA = () => {
                     onChange={(event) => handleOnChangeFile(item.id, event)}
                   />
                   <span>
-                    &nbsp; {item.imageFile ?
-                      <span onClick={() => handleShowPreview(item.imageFile, item.imageName)}> {item.imageName}</span>
+                    {item.imageFile ?
+                      <span
+                        className="name-img-preview"
+                        onClick={() => handleShowPreview(item.imageFile, item.imageName)}> {item.imageName}</span>
                       :
                       '0 file was uploaded'}
                   </span>
