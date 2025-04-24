@@ -7,7 +7,13 @@ const LoginAccount = (email, password) => {
 const SignupAccount = (dataUser) => {
   return AxiosInstance.post("api/v1/register", dataUser);
 }
+
+const LogOut = (email, refresh_token) => {
+  return AxiosInstance.post('api/v1/logout', { email, refresh_token });
+}
+
 export {
   LoginAccount,
   SignupAccount,
+  LogOut,
 }
