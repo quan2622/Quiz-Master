@@ -1,0 +1,43 @@
+.dashboard-container {
+  padding: 15px 20px;
+  .title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #3e3040;
+  }
+  .content {
+    display: flex;
+    .left-content {
+      width: 40%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      align-content: space-evenly;
+      // gap: 18px;
+      .content-child {
+        width: 46%;
+        height: 46%;
+        border: 1px solid red;
+        border-radius: 8px;
+        transition: all 0.2s ease-in;
+        padding: 15px;
+        &:hover {
+          border-radius: 14px;
+        }
+      }
+    }
+    .right-content {
+      width: 60%;
+      border: 1px solid yellow;
+      border-radius: 8px;
+      padding: 30px 10px 25px;
+      margin-left: 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      .chart-container {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}

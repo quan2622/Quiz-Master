@@ -21,7 +21,7 @@ import User from "./components/User/User";
 import Admin from "./components/Admin/Admin";
 import HomePage from "./components/Home/HomePage";
 import ManageUser from "./components/Admin/Content/ManageUser";
-import DashBoard from "./components/Admin/Content/DashBoard";
+import DashBoard from "./components/Admin/Content/DashBoard/DashBoard";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 
