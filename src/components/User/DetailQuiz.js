@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { data, useLocation, useParams } from "react-router-dom";
+import { data, NavLink, useLocation, useParams } from "react-router-dom";
 import { getDataQuiz, submitQuiz } from "../../services/quizService";
 import _ from "lodash";
 import "./DetailQuiz.scss"
@@ -7,6 +7,9 @@ import Question from "./Question";
 import { toast } from "react-toastify";
 import ModalResult from "./ModalResult";
 import RightContent from "./Content/RightContent";
+import { Breadcrumb } from "react-bootstrap";
+import PerfectScrollbar from 'react-perfect-scrollbar'
+
 
 const DetailQuiz = (props) => {
   const params = useParams();
@@ -32,7 +35,7 @@ const DetailQuiz = (props) => {
         .groupBy("id")
         // `key` is group's name (id), `value` is the array of objects
         .map((value, key) => {
-          const answer = [];
+          let answer = [];
           let question_description, question_image = null;
           value.forEach((item, index) => {
             if (index == 0) {
@@ -119,41 +122,50 @@ const DetailQuiz = (props) => {
   console.log('check data model: ', dataModal);
 
   return (
-    <div className="detail-quiz-container">
-      <div className="left-content">
-        <div className="title">
-          Quiz {quizId}: {quiz_title}
-        </div>
-        <div className="body">
-          <div className="question-body">
-            <div className="question-content">
-              <Question
-                data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[currentQuestion] : {}}
-                index={currentQuestion}
-                handleCheckbox={handleCheckbox}
-              />
+    <>
+      <div className="detail-quiz-container">
+        {/* <div className="left-content"> */}
+        <PerfectScrollbar className="left-content">
+          <Breadcrumb className="breadcrumb-header">
+            <NavLink to='/' className={"breadcrumb-item"}>Home</NavLink>
+            <NavLink to='/users' className={"breadcrumb-item"}>Users</NavLink>
+            <Breadcrumb.Item active>Quiz Submission</Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="title">
+            Quiz {quizId}: {quiz_title}
+          </div>
+          <div className="body">
+            <div className="question-body">
+              <div className="question-content">
+                <Question
+                  data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[currentQuestion] : {}}
+                  index={currentQuestion}
+                  handleCheckbox={handleCheckbox}
+                />
+              </div>
+            </div>
+            <div className="footer">
+              <button className={`btn-prev ${currentQuestion == 0 ? "disabled" : ""}`} onClick={() => handlePrev()}>Prev</button>
+              <button className={`btn-next ${currentQuestion == dataQuiz.length - 1 ? "disabled" : ""}`} onClick={() => handleNext()}>Next</button>
             </div>
           </div>
-          <div className="footer">
-            <button className={`btn-prev ${currentQuestion == 0 ? "disabled" : ""}`} onClick={() => handlePrev()}>Prev</button>
-            <button className={`btn-next ${currentQuestion == dataQuiz.length - 1 ? "disabled" : ""}`} onClick={() => handleNext()}>Next</button>
-          </div>
+        </PerfectScrollbar>
+        {/* </div> */}
+        <div className="right-content">
+          <RightContent
+            dataQuiz={dataQuiz}
+            handleFinishQuiz={handleFinishQuiz}
+            setQuestionIndex={setCurrentQuestion}
+            currentQuestion={currentQuestion}
+          />
         </div>
-      </div>
-      <div className="right-content">
-        <RightContent
-          dataQuiz={dataQuiz}
-          handleFinishQuiz={handleFinishQuiz}
-          setQuestionIndex={setCurrentQuestion}
-          currentQuestion={currentQuestion}
+        <ModalResult
+          show={showResult}
+          setShow={setShowResult}
+          dataModal={dataModal}
         />
       </div>
-      <ModalResult
-        show={showResult}
-        setShow={setShowResult}
-        dataModal={dataModal}
-      />
-    </div>
+    </>
   )
 }
 

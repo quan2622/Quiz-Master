@@ -4,6 +4,19 @@
   .left-content {
     width: 75%;
     padding: 30px 60px 30px;
+    // css add scroll-bar
+    max-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    // css add scroll-bar
+
+    .breadcrumb-header {
+      padding: 15px 0;
+      a {
+        text-decoration: none !important;
+      }
+    }
 
     .title {
       padding: 14px 18px;
@@ -22,6 +35,9 @@
       border-radius: 12px;
       background: #f7f7f8;
       box-shadow: 1px 1px 6px #3e3040a8;
+      // css add scroll-bar
+      flex: 1;
+      // css add scroll-bar
 
       .question-content {
         .question {
