@@ -12,8 +12,13 @@ const LogOut = (email, refresh_token) => {
   return AxiosInstance.post('api/v1/logout', { email, refresh_token });
 }
 
+const refresh_token = (data) => {
+  return AxiosInstance.post('api/v1/refresh-token', data);
+}
+
 export {
   LoginAccount,
   SignupAccount,
   LogOut,
+  refresh_token,
 }
