@@ -1,45 +1,52 @@
-import { Bar, BarChart, CartesianGrid, Legend, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, Cell, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import "./DashBoard.scss"
-import { Tooltip } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { getOverview } from "../../../../services/dashboardService";
+import { toast } from "react-toastify";
+import CountUp from "react-countup";
 
 const DashBoard = (props) => {
-  const data = [
-    {
-      "name": "Page A",
-      "uv": 4000,
-      "pv": 2400
-    },
-    {
-      "name": "Page B",
-      "uv": 3000,
-      "pv": 1398
-    },
-    {
-      "name": "Page C",
-      "uv": 2000,
-      "pv": 9800
-    },
-    {
-      "name": "Page D",
-      "uv": 2780,
-      "pv": 3908
-    },
-    {
-      "name": "Page E",
-      "uv": 1890,
-      "pv": 4800
-    },
-    {
-      "name": "Page F",
-      "uv": 2390,
-      "pv": 3800
-    },
-    {
-      "name": "Page G",
-      "uv": 3490,
-      "pv": 4300
+
+  const [dataOverView, setDataOverView] = useState({});
+  const [dataChart, setDataChart] = useState([]);
+
+
+  useEffect(() => {
+    fetchDataOverview();
+  }, [])
+
+  const fetchDataOverview = async () => {
+    const res = await getOverview();
+    console.log('check data overview: ', res.DT);
+    if (res && res.EC === 0) {
+      setDataOverView(res.DT);
+      // process chart data
+      let qz = 0, qs = 0, as = 0;
+      qz = res?.DT?.others?.countQuiz ?? 0;
+      qs = res?.DT?.others?.countQuestions ?? 0;
+      as = res?.DT?.others?.countAnswers ?? 0;
+
+      const data = [
+        {
+          "name": "Quizzes",
+          "value": qz,
+        },
+        {
+          "name": "Questions",
+          "value": qs,
+        },
+        {
+          "name": "Answers",
+          "value": as
+        }
+      ]
+      setDataChart(data);
+    } else {
+      toast.error(res.EM);
     }
-  ]
+  }
+  console.log('>>>check data overview render: ', dataOverView);
+
 
   return (
     <div className="dashboard-container">
@@ -48,23 +55,67 @@ const DashBoard = (props) => {
       </div>
       <div className="content">
         <div className="left-content">
-          <div className="content-child">Total user</div>
-          <div className="content-child">Total quiz</div>
-          <div className="content-child">Total question</div>
-          <div className="content-child">Total answer</div>
+          <div className="content-child">
+            <span className="text-1">Total user</span>
+            <span className="text-2">
+              {dataOverView && dataOverView.users &&
+                dataOverView.users.total ?
+                <>
+                  <CountUp end={dataOverView.users.total} duration={1.5} redraw={true} />
+                </> : <></>}
+            </span>
+          </div>
+          <div className="content-child">
+            <span className="text-1">Total quiz</span>
+            <span className="text-2">
+              {dataOverView && dataOverView.users &&
+                dataOverView.users.total ?
+                <>
+                  <CountUp end={dataOverView.others.countQuiz} duration={1.5} redraw={true} />
+                </> : <></>}
+            </span>
+          </div>
+          <div className="content-child">
+            <span className="text-1">Total question</span>
+            <span className="text-2">
+              {dataOverView && dataOverView.users &&
+                dataOverView.users.total ?
+                <>
+                  <CountUp end={dataOverView.others.countQuestions} duration={1.5} redraw={true} />
+                </> : <></>}
+            </span>
+          </div>
+          <div className="content-child">
+            <span className="text-1">Total answer</span>
+            <span className="text-2">
+              {dataOverView && dataOverView.users &&
+                dataOverView.users.total ?
+                <>
+                  <CountUp end={dataOverView.others.countAnswers} duration={2} redraw={true} />
+                </> : <></>}
+            </span>
+          </div>
         </div>
         <div className="right-content">
-          <div className="chart-container">
-            <BarChart width={680} height={330} data={data}>
+          <ResponsiveContainer width="98%" height="100%">
+            <BarChart data={dataChart} isAnimationActive={true}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="pv" fill="#ff6585" />
-              <Bar dataKey="uv" fill="#51a3e4" />
+              <Bar dataKey="value" barSize={40} animationDuration={2000} animationEasing="ease-in-out">
+                {
+                  dataChart.map((item, index) => {
+                    const color_col = ["#ff6585", "#51a3e4", "#ff9f41"];
+                    return <Cell key={`cell-${item.name}`} fill={color_col[index]} />
+                  })
+                }
+              </Bar>
+              {/* <Bar dataKey="qs" fill= /> */}
+              {/* <Bar dataKey="as" fill= /> */}
             </BarChart>
-          </div>
+          </ResponsiveContainer>
         </div>
       </div>
     </div>
