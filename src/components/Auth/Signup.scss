@@ -42,7 +42,11 @@
       padding: 10px 0;
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: space-between;
+      .languages-signup {
+        padding-left: 3px;
+      }
+
       .helper {
         font-size: 16px;
         font-weight: 400;

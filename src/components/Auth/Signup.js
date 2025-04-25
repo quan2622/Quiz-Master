@@ -6,6 +6,7 @@ import { SignupAccount } from "../../services/authService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+import Languages from "../Header/Languages";
 
 const Signup = (props) => {
   const navigate = useNavigate();
@@ -127,7 +128,9 @@ const Signup = (props) => {
             <div className="col-md-7">
               <div className="right-side">
                 <div className="header">
-
+                  <div className="languages-signup">
+                    <Languages />
+                  </div>
                   <div className="helper">
                     Already have an account? <button onClick={() => navigate("/login")}>Log in</button>
                   </div>

@@ -9,6 +9,7 @@ import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
 import { ImSpinner } from "react-icons/im";
+import Languages from "../Header/Languages";
 
 const Login = (props) => {
   const navigate = useNavigate();
@@ -69,7 +70,10 @@ const Login = (props) => {
             Quiz Master
           </NavLink>
         </div>
-        <div className="helper">Have a question? Contact us</div>
+        <div className="helper">
+          Have a question? Contact us
+          <Languages />
+        </div>
       </div>
       <div className="body">
         <div className="container">
