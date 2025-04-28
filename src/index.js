@@ -24,6 +24,7 @@ import ManageUser from "./components/Admin/Content/ManageUser";
 import DashBoard from "./components/Admin/Content/DashBoard/DashBoard";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
+import AdminLogin from "./components/Auth/AdminLogin";
 
 // Toast
 import { Bounce, ToastContainer } from "react-toastify";
@@ -82,6 +83,7 @@ let router = createBrowserRouter([
   },
   { path: '/login', Component: Login },
   { path: '/sign-up', Component: Signup },
+  { path: '/admin-login', Component: AdminLogin },
   { path: '*', Component: NotFound },
 ]);
 
