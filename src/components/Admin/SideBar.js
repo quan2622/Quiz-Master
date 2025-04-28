@@ -7,11 +7,9 @@ import {
   SidebarFooter,
   SidebarContent,
 } from 'react-pro-sidebar';
-import { FaTachometerAlt, FaGem, FaGithub, FaRegLaughWink } from 'react-icons/fa';
+import { FaTachometerAlt, FaGem, FaGithub } from 'react-icons/fa';
 import { DiReact } from "react-icons/di";
-import { MdDashboard } from "react-icons/md";
 import sidebarBg from '../../assest/bg2.jpg';
-import 'react-pro-sidebar/dist/css/styles.css';
 import "./SideBar.scss"
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -27,18 +25,7 @@ const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
         onToggle={handleToggleSidebar}
       >
         <SidebarHeader>
-          <div className="sidebar-container"
-          // style={{
-          //   padding: '24px',
-          //   textTransform: 'uppercase',
-          //   fontWeight: 'bold',
-          //   fontSize: 14,
-          //   letterSpacing: '1px',
-          //   overflow: 'hidden',
-          //   textOverflow: 'ellipsis',
-          //   whiteSpace: 'nowrap',
-          // }}
-          >
+          <div className="sidebar-container">
             <DiReact size={'3em'} color="00bfff" />
             <span onClick={() => navigate('/')}>Quiz Master</span>
           </div>

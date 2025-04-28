@@ -6,7 +6,7 @@ import Select from 'react-select';
 import { addNewQuiz, getDataQuizTable } from "../../../../services/quizService";
 import { toast } from "react-toastify";
 import TableQuiz from "./TableQuiz";
-import { Accordion } from "react-bootstrap";
+import { Accordion, Tab, Tabs } from "react-bootstrap";
 import ModelUpdateQuiz from "./ModalUpdateQuiz";
 import ModalViewQuiz from "./ModalViewQuiz";
 import ModalDeleteQuiz from "./ModalDeleteQuiz";
@@ -89,85 +89,67 @@ const ManageQuiz = (props) => {
 
   return (
     <div className="quiz-container">
-      <Accordion defaultActiveKey="0">
-        <Accordion.Item eventKey="0">
-          <Accordion.Header>
-            <div className="title">
-              Manage Quiz
-            </div>
-          </Accordion.Header>
-          <Accordion.Body>
-            <div className="add-new">
 
-              <fieldset className="border rounded-3 p-3">
-                <legend className="float-none w-auto px-3">Add New Quiz:</legend>
-                <div className="form-floating mb-3">
-                  <input type="email" className="form-control" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-                  <label >Name</label>
+      <Tabs
+        defaultActiveKey="main"
+        id="uncontrolled-tab-example"
+        className="mb-3"
+        justify
+      >
+        <Tab eventKey="main" title="Manage Quiz">
+          <div className="add-new">
+
+            <fieldset className="border rounded-3 p-3">
+              <legend className="float-none w-auto px-3">Add New Quiz:</legend>
+              <div className="form-floating mb-3">
+                <input type="email" className="form-control" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+                <label >Name</label>
+              </div>
+              <div className="form-floating mb-3">
+                <input type="text" className="form-control" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
+                <label >Description</label>
+              </div>
+              <div className="more-action">
+                <div className="select-container">
+                  <Select
+                    value={difficulty}
+                    onChange={setDifficulty}
+                    options={options}
+                    placeholder={'Select quiz type'}
+                  />
+                  <button className="btn btn-primary" onClick={() => handleSubmitQuiz()}>Submit</button>
                 </div>
-                <div className="form-floating mb-3">
-                  <input type="text" className="form-control" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-                  <label >Description</label>
-                </div>
-                <div className="more-action">
-                  <div className="select-container">
-                    <Select
-                      value={difficulty}
-                      onChange={setDifficulty}
-                      options={options}
-                      placeholder={'Select quiz type'}
-                    />
-                    <button className="btn btn-primary" onClick={() => handleSubmitQuiz()}>Submit</button>
+                <label htmlFor="input-file" className="form-label" id="drop-area">
+                  <input id="input-file" type="file" accept="image/*" hidden onChange={e => handleUploadImage(e)} />
+                  <div className="col-md-12 img-preview">
+                    {previewImg ?
+                      <img src={previewImg} alt="image-upload" />
+                      :
+                      <span><RiImageAddLine /> Upload Image Quiz Here!</span>
+                    }
                   </div>
-                  <label htmlFor="input-file" className="form-label" id="drop-area">
-                    <input id="input-file" type="file" accept="image/*" hidden onChange={e => handleUploadImage(e)} />
-                    <div className="col-md-12 img-preview">
-                      {previewImg ?
-                        <img src={previewImg} alt="image-upload" />
-                        :
-                        <span><RiImageAddLine /> Upload Image Quiz Here!</span>
-                      }
-                    </div>
-                  </label>
-                </div>
-              </fieldset>
-            </div>
-            <hr />
-            <div className="list-detail">
-              <TableQuiz
-                listQuiz={listQuiz}
-                handleUpdate={handleUpdate}
-                handleViewInfo={handleViewInfo}
-                handleDeleteQuiz={handleDeleteQuiz}
-                fetchDataQuiz={fetchDataQuiz}
-              />
-            </div>
-          </Accordion.Body>
-        </Accordion.Item>
-        <Accordion.Item eventKey="1">
-          <Accordion.Header>
-            <div className="title">
-              Update Q/A Quiz
-            </div>
-          </Accordion.Header>
-          <Accordion.Body>
-            <QuizQA />
-          </Accordion.Body>
-        </Accordion.Item>
-        <Accordion.Item eventKey="2">
-          <Accordion.Header>
-            <div className="title">
-              Assign Quiz To User
-            </div>
-          </Accordion.Header>
-          <Accordion.Body>
-            <AssignQuiz />
-          </Accordion.Body>
-        </Accordion.Item>
-
-
-      </Accordion>
-
+                </label>
+              </div>
+            </fieldset>
+          </div>
+          <hr />
+          <div className="list-detail">
+            <TableQuiz
+              listQuiz={listQuiz}
+              handleUpdate={handleUpdate}
+              handleViewInfo={handleViewInfo}
+              handleDeleteQuiz={handleDeleteQuiz}
+              fetchDataQuiz={fetchDataQuiz}
+            />
+          </div>
+        </Tab>
+        <Tab eventKey="q/a-quiz" title="Update Q/A Quiz">
+          <QuizQA />
+        </Tab>
+        <Tab eventKey="assign-quiz" title="Assign Quiz To User">
+          <AssignQuiz />
+        </Tab>
+      </Tabs>
 
 
       <ModelUpdateQuiz
