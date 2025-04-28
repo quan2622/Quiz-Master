@@ -21,6 +21,7 @@ const DetailQuiz = (props) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [dataModal, setDataModal] = useState({});
+  const [isSubmitQuiz, setIsSubmitQuiz] = useState(false);
 
   useEffect(() => {
     FetchQuestions();
@@ -43,6 +44,7 @@ const DetailQuiz = (props) => {
               question_image = item.image;
             }
             item.answers.isSelected = false;
+            item.answers.isCorrected = false;
             answer.push(item.answers);
           });
           answer = _.orderBy(answer, ['id'], ['asc']);
@@ -112,14 +114,39 @@ const DetailQuiz = (props) => {
     const res = await submitQuiz(payload);
     if (res.EC === 0) {
       toast.success(res.EM);
+      setIsSubmitQuiz(true)
       console.log("data respone: ", res);
       setDataModal(res.DT);
       setShowResult(true);
+
+      // Show correct answers
+      if (res.DT && res.DT.quizData) {
+        let dataQuizClone = _.cloneDeep(dataQuiz);
+        let quizData_answer = res.DT.quizData;
+        console.log('data quiz: ', dataQuiz, ' - data answer: ', quizData_answer);
+        for (let q of quizData_answer) {
+          for (let i = 0; i < dataQuizClone.length; i++) {
+            if (q.questionId === +dataQuizClone[i].questionId) {
+              let new_answers = [];
+
+              for (let j = 0; j < dataQuizClone[i].answer.length; j++) {
+                let s = q.systemAnswers.find(item => item.id === dataQuizClone[i].answer[j].id);
+                if (s) {
+                  dataQuizClone[i].answer[j].isCorrected = true;
+                }
+                new_answers.push(dataQuizClone[i].answer[j]);
+              }
+              dataQuizClone[i].answer = new_answers;
+            }
+          }
+        }
+        setDataQuiz(dataQuizClone);
+      }
     } else {
       toast.error(res.EM);
     }
   }
-  console.log('check data model: ', dataModal);
+  console.log('check data quiz: ', dataQuiz);
 
   return (
     <>
@@ -141,6 +168,7 @@ const DetailQuiz = (props) => {
                   data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[currentQuestion] : {}}
                   index={currentQuestion}
                   handleCheckbox={handleCheckbox}
+                  isSubmitQuiz={isSubmitQuiz}
                 />
               </div>
             </div>
@@ -157,6 +185,7 @@ const DetailQuiz = (props) => {
             handleFinishQuiz={handleFinishQuiz}
             setQuestionIndex={setCurrentQuestion}
             currentQuestion={currentQuestion}
+            isSubmitQuiz={isSubmitQuiz}
           />
         </div>
         <ModalResult

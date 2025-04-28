@@ -13,14 +13,15 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { Button as AntButton, Modal as AntModal, Space } from 'antd';
 import { useNavigate } from "react-router-dom";
+import _ from "lodash";
 
 
 const Profile = (props) => {
   const { show, setShow } = props;
   const info_user = useSelector(state => state.user.account);
-  const [username, setUserName] = useState(info_user?.username ? info_user?.username : '');
-  const [image, setImage] = useState(info_user?.image ? info_user?.image : '');
-  const [imagePreview, setImagePreview] = useState(info_user?.image ? `data:image/jpeg;base64,${info_user?.image}` : '');
+  const [username, setUserName] = useState('');
+  const [image, setImage] = useState('');
+  const [imagePreview, setImagePreview] = useState('');
 
   const [activeTab, setActiveTab] = useState('home');
 
@@ -40,6 +41,14 @@ const Profile = (props) => {
   const dispatch = useDispatch();
   // ant design
   const { confirm } = AntModal;
+
+  useEffect(() => {
+    if (info_user && !_.isEmpty(info_user)) {
+      setUserName(info_user?.username);
+      setImage(info_user?.image);
+      setImagePreview(`data:image/jpeg;base64,${info_user?.image}`);
+    }
+  }, [info_user]);
 
   useEffect(() => {
     fetchHistory();

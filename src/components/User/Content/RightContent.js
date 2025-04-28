@@ -4,7 +4,7 @@ import CountDown from "./CountDown";
 const RightContent = (props) => {
   const refItem = useRef([]);
 
-  const { dataQuiz, handleFinishQuiz, setQuestionIndex, currentQuestion } = props;
+  const { dataQuiz, handleFinishQuiz, setQuestionIndex, currentQuestion, isSubmitQuiz } = props;
   // console.log('check data quiz: ', dataQuiz);
 
   const onTimeUp = () => {
@@ -38,7 +38,7 @@ const RightContent = (props) => {
 
   return (
     <div className="right-container">
-      <CountDown onTimeUp={onTimeUp} />
+      <CountDown onTimeUp={onTimeUp} isSubmitQuiz={isSubmitQuiz} />
       <hr />
       <div className="section-2">
         <span className="title-section">List question</span>
@@ -61,7 +61,12 @@ const RightContent = (props) => {
       </div>
       <hr />
       <div className="section-3">
-        <button onClick={() => handleFinishQuiz()}>Submit quiz</button>
+        <button className={isSubmitQuiz ? 'isSubmit_btn' : ''} onClick={() => {
+          if (!isSubmitQuiz)
+            handleFinishQuiz();
+        }}>
+          Submit quiz
+        </button>
       </div>
     </div>
   )

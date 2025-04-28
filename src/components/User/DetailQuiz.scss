@@ -84,6 +84,14 @@
             input {
               margin-right: 12px;
             }
+
+            &.isCorrect {
+              background: #4aed3f !important;
+            }
+
+            &.isInCorrect {
+              background: #f15252 !important;
+            }
           }
         }
       }
@@ -193,6 +201,10 @@
         &:hover {
           opacity: 1;
           box-shadow: 1px 1px 10px #6d606e;
+        }
+
+        &.isSubmit_btn {
+          cursor: no-drop;
         }
       }
     }

@@ -8,14 +8,14 @@ const CountDown = (props) => {
       props.onTimeUp();
       return;
     }
-    const timer = setInterval(() => {
-      setDuration(duration - 1);
-    }, 1000);
-
-
-    return () => {
-      // clean up
-      clearInterval(timer);
+    if (!props.isSubmitQuiz) {
+      const timer = setInterval(() => {
+        setDuration(duration - 1);
+      }, 1000);
+      return () => {
+        // clean up
+        clearInterval(timer);
+      }
     }
   }, [duration]);
 

@@ -3,7 +3,7 @@ import { useState } from "react";
 import Lightbox from "react-awesome-lightbox";
 
 const Question = (props) => {
-  const { data, index } = props;
+  const { data, index, isSubmitQuiz } = props;
   const [isPreviewImage, setIsPreviewImage] = useState(false);
 
   const handleShowPreview = () => {
@@ -18,6 +18,17 @@ const Question = (props) => {
   const handleCheckbox = (event, aId, qId) => {
     props.handleCheckbox(+aId, +qId);
   }
+
+  const handleCorrectAnswer = (answer) => {
+    if (answer.isSelected === true) {
+      if (answer.isCorrected === false)
+        return 'isInCorrect'
+    }
+    if (answer.isCorrected === true) {
+      return 'isCorrect'
+    }
+  }
+
   return (
     <>
       <div className="question">
@@ -40,8 +51,8 @@ const Question = (props) => {
         {data.answer && data.answer.length > 0 &&
           data.answer.map((item, index) => {
             return (
-              <label className="item" key={`answer-${item.id}`} htmlFor={index}>
-                <input className="form-check-input" type="checkbox" id={index} onChange={(e) => handleCheckbox(e, item.id, data.questionId)} checked={item.isSelected} />
+              <label className={`item  ${isSubmitQuiz === true && handleCorrectAnswer(item)}`} key={`answer-${item.id}`} htmlFor={index}>
+                <input className="form-check-input" type="checkbox" id={index} onChange={(e) => handleCheckbox(e, item.id, data.questionId)} checked={item.isSelected} disabled={isSubmitQuiz ? true : false} />
                 <label className="form-check-label" htmlFor={index}>
                   {item.description}
                 </label>
