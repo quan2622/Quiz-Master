@@ -272,38 +272,40 @@ const Profile = (props) => {
               </div>
             </div>
           </Tab>
-          <Tab eventKey="history" title="History">
-            <div className="history">
-              <PerfectScrollbar>
-                <table className="table table-hover table-bordered table-history">
-                  <thead>
-                    <tr className="table-info">
-                      <th scope="col">ID</th>
-                      <th scope="col">Quiz Name</th>
-                      <th scope="col">Total Question</th>
-                      <th scope="col">Total Correct</th>
-                      <th scope="col">Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {history && history.length > 0 &&
-                      history.map((item, index) => {
-                        return (
-                          <tr key={`history-${index}`}>
-                            <td>{item.id}</td>
-                            <td>{item.quiz_name}</td>
-                            <td>{item.total_questions}</td>
-                            <td>{item.total_correct}</td>
-                            <td>{item.date}</td>
-                          </tr>
-                        )
-                      })
-                    }
-                  </tbody>
-                </table>
-              </PerfectScrollbar>
-            </div>
-          </Tab>
+          {info_user.role === 'USER' &&
+            <Tab eventKey="history" title="History">
+              <div className="history">
+                <PerfectScrollbar>
+                  <table className="table table-hover table-bordered table-history">
+                    <thead>
+                      <tr className="table-info">
+                        <th scope="col">ID</th>
+                        <th scope="col">Quiz Name</th>
+                        <th scope="col">Total Question</th>
+                        <th scope="col">Total Correct</th>
+                        <th scope="col">Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {history && history.length > 0 &&
+                        history.map((item, index) => {
+                          return (
+                            <tr key={`history-${index}`}>
+                              <td>{item.id}</td>
+                              <td>{item.quiz_name}</td>
+                              <td>{item.total_questions}</td>
+                              <td>{item.total_correct}</td>
+                              <td>{item.date}</td>
+                            </tr>
+                          )
+                        })
+                      }
+                    </tbody>
+                  </table>
+                </PerfectScrollbar>
+              </div>
+            </Tab>
+          }
         </Tabs>
       </Modal.Body>
       <Modal.Footer>

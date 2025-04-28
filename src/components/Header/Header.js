@@ -38,6 +38,8 @@ const Header = () => {
     }
   }
 
+  // console.log("check account", account);
+
   return (
     // <Navbar expand="lg" className="bg-body-tertiary" onScroll={() => handleScrollHeader()}>
     <>
@@ -48,8 +50,10 @@ const Header = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <NavLink to="/" className="nav-link">Home</NavLink>
-              <NavLink to="/users" className="nav-link">Users</NavLink>
-              <NavLink to="/admin" className="nav-link">Admin</NavLink>
+              <NavLink to="/users" className="nav-link">List Quiz</NavLink>
+              {account.role === 'ADMIN' &&
+                <NavLink to="/admin" className="nav-link">Admin</NavLink>
+              }
             </Nav>
             <Nav className="justify-content-end">
               {!isAuthencated ?
