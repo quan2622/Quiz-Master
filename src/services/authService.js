@@ -16,9 +16,22 @@ const refresh_token = (data) => {
   return AxiosInstance.post('api/v1/refresh-token', data);
 }
 
+const updateProfile = (userName, avt) => {
+  const data = new FormData();
+  data.append('username', userName);
+  data.append('userImage', avt);
+  return AxiosInstance.post('api/v1/profile', data);
+}
+
+const changePassword = (current_password, new_password) => {
+  return AxiosInstance.post('api/v1/change-password', { current_password, new_password });
+}
+
 export {
   LoginAccount,
   SignupAccount,
   LogOut,
   refresh_token,
+  updateProfile,
+  changePassword,
 }

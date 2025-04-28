@@ -1,4 +1,4 @@
-import { FETCH_USER_LOGIN, USER_LOGOUT_SUCCESS, USER_REFRESH_TOKEN } from "../action/userAction";
+import { FETCH_USER_LOGIN, USER_LOGOUT_SUCCESS, USER_REFRESH_TOKEN, USER_UPDATE_PROFILE } from "../action/userAction";
 
 const INITIAL_STATE = {
   account: {
@@ -42,12 +42,23 @@ const userReducer = (state = INITIAL_STATE, action) => {
       };
 
     case USER_REFRESH_TOKEN:
+      console.log('redux check payload: ', action?.payload);
       return {
         ...state,
         account: {
           ...state.account,
           access_token: action?.payload?.access_token,
           refresh_token: action?.payload?.refresh_token,
+        }
+      };
+
+    case USER_UPDATE_PROFILE:
+      return {
+        ...state,
+        account: {
+          ...state.account,
+          username: action?.payload?.username,
+          image: action?.payload?.image,
         }
       };
 
