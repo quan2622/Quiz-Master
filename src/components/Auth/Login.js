@@ -98,21 +98,23 @@ const Login = (props) => {
                   </div>
                   <div className="form-group mt-4">
                     <label className="form-label">Password</label>
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Password"
-                      className="form-control input-login input-password"
-                      value={password}
-                      onChange={(event) => setPassword(event.target.value)}
-                      onKeyDown={(event) => handleKeyDown(event)}
-                    />
-                    <button
-                      className="showPassword"
-                      onMouseDown={() => setShowPassWord(!showPassword)}
-                      onMouseUp={() => setShowPassWord(!showPassword)}
-                    >
-                      {showPassword ? <IoIosEye /> : <IoIosEyeOff />}
-                    </button>
+                    <div className="login_password-container">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Password"
+                        className="form-control input-login input-password"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                        onKeyDown={(event) => handleKeyDown(event)}
+                      />
+                      <button
+                        className="showPassword"
+                        onMouseDown={() => setShowPassWord(!showPassword)}
+                        onMouseUp={() => setShowPassWord(!showPassword)}
+                      >
+                        {showPassword ? <IoIosEye /> : <IoIosEyeOff />}
+                      </button>
+                    </div>
                   </div>
 
                   <div className="form-bottom">

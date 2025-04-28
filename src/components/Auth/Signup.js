@@ -149,10 +149,12 @@ const Signup = (props) => {
                       </div>
                       <div className="form-group mt-4">
                         <label className="form-label">Password<span>*</span></label>
-                        <input type={showPassword ? "text" : "password"} placeholder="Password" className="form-control input-signup input-password" value={password} onChange={(event) => setPassword(event.target.value)} />
-                        <button className="showPassword" onMouseDown={() => setShowPassWord(!showPassword)} onMouseUp={() => setShowPassWord(!showPassword)}>
-                          {showPassword ? <IoIosEye /> : <IoIosEyeOff />}
-                        </button>
+                        <div className="signUp_password-container">
+                          <input type={showPassword ? "text" : "password"} placeholder="Password" className="form-control input-signup input-password" value={password} onChange={(event) => setPassword(event.target.value)} />
+                          <button className="showPassword" onMouseDown={() => setShowPassWord(!showPassword)} onMouseUp={() => setShowPassWord(!showPassword)}>
+                            {showPassword ? <IoIosEye /> : <IoIosEyeOff />}
+                          </button>
+                        </div>
                       </div>
                       <div className="form-group mt-4">
                         <label className="form-label">User name</label>
