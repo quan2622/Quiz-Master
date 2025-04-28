@@ -1,0 +1,152 @@
+.login-container {
+  .loader-icon {
+    font-size: 18px;
+    margin-right: 8px;
+    margin-bottom: 2px;
+    top: 2px;
+    animation: spin 1s infinite linear;
+  }
+
+  @keyframes spin {
+    from {
+      transform: scale(1) rotate(0deg);
+    }
+    to {
+      transform: scale(1) rotate(360deg);
+    }
+  }
+
+  .header {
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 65px;
+    .navbar-brand {
+      font-size: 30px;
+      font-weight: 600;
+      color: #3e3040;
+    }
+    .helper {
+      font-size: 16px;
+      color: #3e3040a8;
+      display: flex;
+      gap: 10px;
+    }
+  }
+  .body {
+    padding-top: 46px;
+    height: 89vh;
+    border-radius: 12px;
+    margin: 0 20px 16px;
+    overflow: hidden;
+    background: #f7f7f8;
+    box-shadow: 1px 1px 10px #3e3040a8;
+    .left-side {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 12px;
+        width: 68%;
+        .title {
+          font-size: 38px;
+          font-weight: 400;
+          margin-top: 20px;
+          color: #3c323e;
+        }
+        .sub-title {
+          font-size: 18px;
+          font-weight: 400;
+          color: #3e3040a8;
+          margin-top: 12px;
+        }
+        .content-form {
+          padding-top: 20px;
+
+          .form-label {
+            font-size: 16px;
+            color: #3e3040;
+            font-weight: 500;
+          }
+
+          .login_password-container {
+            position: relative;
+            .input-login {
+              padding: 8px 16px;
+              border-radius: 12px;
+              outline: none;
+              border: none;
+
+              &:focus {
+                outline: none;
+                border: none;
+                box-shadow: 1px 1px 10px #3e304083;
+              }
+            }
+
+            .showPassword {
+              position: absolute;
+              top: 1px;
+              right: 8px;
+              border: none;
+              background: transparent;
+              font-size: 21px;
+              color: #3c323e;
+            }
+          }
+          .form-bottom {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+
+            .btn-login {
+              padding: 8px 0;
+              font-size: 18px;
+              font-weight: 600;
+              border: none;
+              border-radius: 12px;
+              background: #3c323e;
+              color: #f7f7f8;
+              transition: all 0.3s ease;
+              &:hover {
+                background-color: #f2ece4;
+                color: #3e3040;
+                box-shadow: 1px 1px 8px #3e3040a8;
+              }
+              &:disabled {
+                opacity: 0.8;
+                pointer-events: none;
+                cursor: no-drop;
+              }
+            }
+
+            .nav-signup {
+              display: flex;
+              justify-content: center;
+              color: #3e3040a8;
+              font-weight: 500;
+              margin-top: 12px;
+              border-top: 2px solid #56525a14;
+              padding-top: 12px;
+
+              .nav-title {
+                color: #3e3040;
+                font-weight: 500;
+                cursor: default;
+
+                &:hover {
+                  color: burlywood;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,12 +1,26 @@
 import './App.scss';
 import React from "react";
-
+import Header from "./components/Header/Header";
+import { Outlet } from "react-router-dom";
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
 // Init code React app by `create react app`
 const App = () => {
   return (
     <div className="app-container">
-      hello world
+      <div className="header-container">
+        <Header />
+      </div>
+      <div className="main-container">
+        <div className="sidenav-container">
+
+        </div>
+        <div className="app-content">
+          <PerfectScrollbar>
+            <Outlet />
+          </PerfectScrollbar>
+        </div>
+      </div>
     </div>
   );
 }

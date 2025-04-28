@@ -1,0 +1,212 @@
+.detail-quiz-container {
+  display: flex;
+  // gap: 20px;
+  .left-content {
+    width: 75%;
+    padding: 30px 60px 30px;
+    // css add scroll-bar
+    max-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    // css add scroll-bar
+
+    .breadcrumb-header {
+      padding: 15px 0;
+      a {
+        text-decoration: none !important;
+      }
+    }
+
+    .title {
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 22px;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 30px;
+      color: #3e3040;
+      background: #f7f7f8;
+      box-shadow: 1px 1px 6px #3e3040a8;
+    }
+
+    .body {
+      padding: 20px 44px 28px;
+      border-radius: 12px;
+      background: #f7f7f8;
+      box-shadow: 1px 1px 6px #3e3040a8;
+      // css add scroll-bar
+      flex: 1;
+      // css add scroll-bar
+
+      .question-content {
+        .question {
+          font-size: 22px;
+          font-weight: 600;
+          display: flex;
+          align-items: center;
+          color: #3e3040;
+          span {
+            color: #3b82f6;
+          }
+        }
+        .image-container {
+          padding: 8px 0 8px;
+          border-radius: 12px;
+          overflow: hidden;
+          img {
+            display: flex;
+            margin: 0 auto;
+            max-height: 250px;
+            width: auto;
+            object-fit: cover;
+            object-position: center;
+          }
+        }
+
+        .answer {
+          padding-top: 18px;
+          display: flex;
+          flex-direction: column;
+          .item {
+            font-size: 18px;
+            font-weight: 400;
+            padding: 8px 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            background: #f9fafb;
+
+            &:hover {
+              background: #eae7eb;
+            }
+
+            input {
+              margin-right: 12px;
+            }
+
+            &.isCorrect {
+              background: #4aed3f !important;
+            }
+
+            &.isInCorrect {
+              background: #f15252 !important;
+            }
+          }
+        }
+      }
+
+      .footer {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        padding-top: 20px;
+        button {
+          padding: 6px 28px;
+          border: none;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+          &.disabled {
+            opacity: 0.4;
+            cursor: no-drop;
+          }
+
+          &:hover {
+            border-radius: 12px;
+          }
+          &.btn-prev {
+            box-shadow: 1px 1px 10px #a9a9aa;
+          }
+
+          &.btn-next {
+            background: #3b82f6;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+
+  .right-content {
+    width: 25%;
+    min-height: 100vh;
+    background-color: #3e3040;
+    color: #fff;
+
+    .title-section {
+      font-size: 18px;
+      font-weight: 500;
+    }
+    .section-1 {
+      padding: 30px 30px 15px;
+
+      .clock-container {
+        margin-top: 22px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        padding: 18px;
+        border-radius: 12px;
+        background: #6d606e;
+      }
+    }
+    .section-2 {
+      padding: 8px 30px 30px;
+
+      .question-container {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 22px;
+        .question-item {
+          padding: 8px 16px;
+          background: #6d606e;
+          border-radius: 12px;
+          transition: all 0.12s ease-in;
+          cursor: pointer;
+          &:hover {
+            background: #866a8a;
+            box-shadow: 1px 1px 10px #6d4c78;
+          }
+
+          &.selected {
+            background: #d17711;
+          }
+
+          &.clicked {
+            // background: #866a8a;
+            box-shadow: 1px 1px 10px #887f8b, -1px -1px 10px #887f8b;
+          }
+        }
+      }
+    }
+
+    .section-3 {
+      padding: 20px 30px 30px;
+      button {
+        width: 100%;
+        padding: 8px 12px;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: 700;
+        transition: all 0.3s ease-in;
+        border: none;
+        color: #3e3040;
+        background: #fff;
+        opacity: 0.8;
+
+        &:hover {
+          opacity: 1;
+          box-shadow: 1px 1px 10px #6d606e;
+        }
+
+        &.isSubmit_btn {
+          cursor: no-drop;
+        }
+      }
+    }
+  }
+}

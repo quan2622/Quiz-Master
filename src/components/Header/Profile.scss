@@ -1,0 +1,31 @@
+.input-group-text {
+  min-width: 150px;
+  text-align: center;
+  padding-left: 24px;
+}
+
+.new-password {
+  position: relative;
+  .show-new-password {
+    position: absolute;
+    z-index: 1;
+    right: 10px;
+    top: 1.8px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+}
+
+.history {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+
+  .ps__rail-x,
+  .ps__rail-y {
+    display: none !important;
+  }
+  .table-history {
+    width: 100%;
+  }
+}
